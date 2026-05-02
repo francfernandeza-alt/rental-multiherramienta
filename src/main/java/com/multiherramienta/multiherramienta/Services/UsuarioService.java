@@ -1,0 +1,8 @@
+package com.multiherramienta.multiherramienta.Services;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class UsuarioService {
+
+}
