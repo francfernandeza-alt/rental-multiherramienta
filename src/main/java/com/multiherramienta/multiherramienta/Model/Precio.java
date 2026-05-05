@@ -1,5 +1,6 @@
 package com.multiherramienta.multiherramienta.Model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,9 +28,11 @@ public class Precio {
     private Integer idPrecio;
 
     @NotNull
+    @Column(nullable = false, length = 7)
     private Integer valorDiario;
 
     @NotNull
+    @Column(nullable = false, length = 7)
     private Integer valorHora;
 
     @ManyToOne
