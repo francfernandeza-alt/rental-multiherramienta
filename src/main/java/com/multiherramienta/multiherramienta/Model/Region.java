@@ -17,17 +17,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Herramientas")
-
+@Table(name = "Region")
 public class Region {
 
     @Id
-    @NotNull
+    @NotNull(message= "El id de la región es obligatorio")
     @Column(nullable = false)
     private Integer numeroRegion;
 
     @NotBlank(message = "El nombre de la región es obligatorio")
-    @Size(min = 10, max = 100, message = "El nombre de la region debe tener entre 10 y 100 caracteres")
+    @Size(min = 3, max = 100, message = "El nombre de la region debe tener entre 3 y 100 caracteres")
     @Column(nullable = false, length = 100)
     private String nombreRegion;
     
