@@ -3,6 +3,7 @@ package com.multiherramienta.multiherramienta.Model;
 
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,15 +20,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Usuario")
 
-public class UsuarioModel {
+public class Usuario {
 
     @Id
+    @NotNull
     private String rutUsuario;
 
     @NotBlank (message = "El nombre es obligatorio")
     @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
     @Column(nullable = false, length = 100)
-    private String nombre;
+    private String nombreUsuario;
 
     @NotBlank (message = "El apellido paterno es obligatorio")
     @Size(min = 3, max = 50, message = "El apellido paterno debe tener entre 3 y 50 caracteres")
