@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Precios")
 
-public class PrecioModel {
+public class Precio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +34,6 @@ public class PrecioModel {
 
     @ManyToOne
     @JoinColumn(name = "idHerramienta")
-    private HerramientaModel herramienta;
+    private Herramienta herramienta;
 
 }
