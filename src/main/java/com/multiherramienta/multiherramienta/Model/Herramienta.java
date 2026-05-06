@@ -1,10 +1,13 @@
 package com.multiherramienta.multiherramienta.Model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -50,5 +53,9 @@ public class Herramienta {
     @Column(nullable = false, length = 100)
     private String estadoHerramienta;
 
-    
+    @OneToMany(mappedBy = "herramienta")
+    private List<Materiales> materiales;
+
+    @OneToMany(mappedBy = "herramienta")
+    private List<TiposHerramienta> tiposHerramienta;
 }
