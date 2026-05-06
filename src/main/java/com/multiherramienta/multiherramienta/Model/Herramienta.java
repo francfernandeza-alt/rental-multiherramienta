@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "Herramientas")
-public class HerramientaModel {
+public class Herramienta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
