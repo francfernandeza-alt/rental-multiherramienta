@@ -5,9 +5,15 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -55,4 +61,11 @@ public class Usuario {
     @Size(min = 8, max = 8, message = "La contraseña debe tener 8 caracteres")
     @Column(nullable = false, length = 8)
     private String contraseñaUsuario;
+    
+    @ManyToOne
+    @JoinColumn(name = "idDireccion", nullable = false)
+    private Direccion direccion;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Reserva> reservas;
 }
