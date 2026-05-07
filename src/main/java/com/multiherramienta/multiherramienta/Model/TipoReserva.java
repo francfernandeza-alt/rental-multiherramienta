@@ -1,8 +1,6 @@
 package com.multiherramienta.multiherramienta.Model;
-import java.time.LocalDate;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,30 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "Reserva")
-
+@Table(name = "TipoReserva")
 public class TipoReserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer numeroReserva;
+    private Integer idTipoReserva;
 
-    @NotNull(message = "La fecha de inicio es obligatoria")
-    @Column(nullable = false)
-    private LocalDate fechaInicio;
-
-    @NotNull(message = "La fecha de fin es obligatoria")
-    @Column(nullable = false)
-    private LocalDate fechaFin;
-
-    @NotBlank(message = "El estado de la reserva es obligatorio")
+    @NotBlank(message = "El nombre del tipo de reserva es obligatorio")
     @Column(nullable = false, length = 50)
-    private String estadoReserva;
-
-    @OneToOne
-    @JoinColumn(name = "rutUsuario")
-    private Usuario usuario;
-
-    @OneToOne
-    @JoinColumn(name = "idHerramienta")
-    private Herramienta herramienta;
+    private String nombreTipoReserva;
 }
