@@ -1,13 +1,14 @@
 package com.multiherramienta.multiherramienta.Model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -48,7 +49,14 @@ public class Reserva {
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name= "idHerramienta", nullable = false)
-    private Herramienta herramienta;
+    @JoinColumn(name= "idMetodoPago", nullable = false)
+    private MetodoPago metodoPago;
+
+    @ManyToOne
+    @JoinColumn(name= "idTipoReserva", nullable = false)
+    private TipoReserva tipoReserva;
+
+    @OneToMany(mappedBy = "reserva")
+    private List<Herramientas> herramientas;
 
 }
