@@ -22,15 +22,13 @@ import lombok.NoArgsConstructor;
 public class Materiales {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Integer idMateriales;
 
-    @NotNull(message = "La herramienta es obligatoria")
     @ManyToOne
     @JoinColumn(name = "idHerramienta", nullable = false)
     private Herramienta herramienta;
 
-    @NotNull(message = "El material es obligatorio")
     @ManyToOne
     @JoinColumn(name = "idMaterial", nullable = false)
     private Material material;
