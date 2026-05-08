@@ -3,9 +3,9 @@ package com.multiherramienta.multiherramienta.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.multiherramienta.multiherramienta.Model.Usuario;
+import com.multiherramienta.multiherramienta.Model.Material;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository <Usuario, String> {
+public interface MaterialRepository extends JpaRepository<Material, Integer> {
 
 }

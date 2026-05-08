@@ -11,30 +11,30 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "Region")
-public class Region {
+@Table(name = "Marca")
+public class Marca {
 
     @Id
-    @NotNull(message= "El id de la región es obligatorio")
+    @NotNull(message= "El id de la marca es obligatorio")
     @Column(nullable = false)
-    private Integer numeroRegion;
+    private Integer idMarca;
 
-    @NotBlank(message = "El nombre de la región es obligatorio")
-    @Size(min = 3, max = 100, message = "El nombre de la region debe tener entre 3 y 100 caracteres")
+    @NotBlank(message = "El nombre de la marca es obligatorio")
+    @Size(min = 3, max = 100, message = "El nombre de la marca debe tener entre 3 y 100 caracteres")
     @Column(nullable = false, length = 100)
-    private String nombreRegion;
+    private String nombreMarca;
 
-    @OneToMany(mappedBy = "region")
-    private List<Comuna> comunas;
+    @Column(nullable = false, length = 1000)
+    private String descripcionMarca;
 
-    
+    @OneToMany(mappedBy = "marca")
+    private List<Herramienta> herramientas;
+
 }
