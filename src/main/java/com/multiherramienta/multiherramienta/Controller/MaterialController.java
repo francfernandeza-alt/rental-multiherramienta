@@ -51,12 +51,7 @@ public class MaterialController {
     @PostMapping
     public ResponseEntity<Material> crearMaterial(@Valid @RequestBody Material material) {
         Material nuevoMaterial = materialService.save(material);
-
-        if (nuevoMaterial != null) {
-            return new ResponseEntity<>(nuevoMaterial, HttpStatus.CREATED);
-        }
-
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(nuevoMaterial, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
