@@ -48,7 +48,7 @@ public class UsuarioService {
             us.setNombreUsuario(usuario.getNombreUsuario());
         }
         if(usuario.getApellidoPaterno() != null){
-            us.setApellidoPaterno(usuario.getApellidoPaterno());
+            us.setApellidoPatern(usuario.getApellidoPaterno());
         }
         if(usuario.getApellidoMaterno() != null){
             us.setApellidoMaterno(usuario.getApellidoMaterno());
@@ -67,25 +67,25 @@ public class UsuarioService {
 
     public UsuarioDTO convertirADTO(Usuario usuario) {
         UsuarioDTO dto = new UsuarioDTO();
-        dto.setRutUsuario(usuario.getRutUsuario());
-        dto.setNombreUsuario(usuario.getNombreUsuario());
-        dto.setApellidoPaterno(usuario.getApellidoPaterno());
-        dto.setEmailUsuario(usuario.getEmailUsuario());
+        dto.setRutUsuarioDTO(usuario.getRutUsuario());
+        dto.setNombreUsuarioDTO(usuario.getNombreUsuario());
+        dto.setApellidoPaternoDTO(usuario.getApellidoPaterno());
+        dto.setEmailUsuarioDTO(usuario.getEmailUsuario());
 
         if(usuario.getDireccion() != null) {
             String direccionCompleta= usuario.getDireccion().getCalle() + " " + usuario.getDireccion().getNumeracion();
-            dto.setDireccion(direccionCompleta);
+            dto.setDireccionUsuarioDTO(direccionCompleta);
         }else{
-            dto.setDireccion("Siempreviva 742");
+            dto.setDireccionUsuarioDTO("Siempreviva 742");
         }
 
         List<Integer> numeroReservas = new ArrayList<>();
         if(usuario.getReservas() != null) {
             for(Reserva nexo : usuario.getReservas()){
-                numeroReservas.add(nexo.getNumeroReserva())
+                numeroReservas.add(nexo.getNumeroReserva());
             }
         }
-        dto.setReservas(numeroReservas);
+        dto.setNumeroReservas(numeroReservas);
 
         return dto;
 
