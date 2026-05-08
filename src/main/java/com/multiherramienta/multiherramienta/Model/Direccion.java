@@ -1,6 +1,13 @@
 package com.multiherramienta.multiherramienta.Model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -8,7 +15,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.multiherramienta.multiherramienta.Model.Usuario;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +23,6 @@ import com.multiherramienta.multiherramienta.Model.Usuario;
 @Entity
 @Table(name = "Direccion")
 public class Direccion {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,13 +37,13 @@ public class Direccion {
     @Column(nullable = false)
     private Integer numeracion;
 
-    @NotBlank(message = "La comuna es obligatoria")
-    @Size(min = 3, max = 100)
-    @Column(nullable = false, length = 100)
-    private String comuna;
+    @NotNull(message = "La comuna es obligatoria")
+    @ManyToOne
+    @JoinColumn(name = "idComuna", nullable = false)
+    private Comuna comuna;
 
-    @OneToOne
-    @JoinColumn(name = "rutUsuario")
+    @NotNull(message = "El usuario es obligatorio")
+    @ManyToOne
+    @JoinColumn(name = "rutUsuario", nullable = false)
     private Usuario usuario;
-
 }

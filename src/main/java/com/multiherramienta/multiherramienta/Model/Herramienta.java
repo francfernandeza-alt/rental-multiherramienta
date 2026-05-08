@@ -74,5 +74,4 @@ public class Herramienta {
     @ManyToOne
     @JoinColumn(name = "idMarca", nullable = false)
     private Marca marca;
-
 }
