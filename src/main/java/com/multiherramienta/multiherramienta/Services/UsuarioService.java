@@ -1,8 +1,94 @@
 package com.multiherramienta.multiherramienta.Services;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UsuarioService {
+import com.multiherramienta.multiherramienta.DTO.UsuarioDTO;
+import com.multiherramienta.multiherramienta.Model.Reserva;
+import com.multiherramienta.multiherramienta.Model.Usuario;
+import com.multiherramienta.multiherramienta.Repository.UsuarioRepository;
 
+import jakarta.transaction.Transactional;
+
+@Service
+@Transactional
+public class UsuarioService {
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    public List<UsuarioDTO> obtenerTodos() {
+        return usuarioRepository.findAll().stream().map(this::convertirADTO).toList();
+    }
+
+    public UsuarioDTO buscarporId(String rut) {
+        Usuario usuario = usuarioRepository.findById(rut).orElseThrow(()-> new RuntimeException("Usuario no encontrado"));
+        return convertirADTO(usuario);
+    }
+
+    public String eliminar(String id) {
+        try {
+            Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario con rut " + id + " no existe."));
+            usuarioRepository.delete(usuario);
+            return "El usuario '" + usuario.getNombreUsuario() + " ha sido eliminado.";
+        } catch (RuntimeException e) {
+            return e.getMessage();
+        }
+    }
+
+    public Usuario guardarUsuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario actualizarUsuario(String id,Usuario usuario){
+        Usuario us = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no existe"));
+        if(usuario.getNombreUsuario() != null){
+            us.setNombreUsuario(usuario.getNombreUsuario());
+        }
+        if(usuario.getApellidoPaterno() != null){
+            us.setApellidoPaterno(usuario.getApellidoPaterno());
+        }
+        if(usuario.getApellidoMaterno() != null){
+            us.setApellidoMaterno(usuario.getApellidoMaterno());
+        }
+        if(usuario.getTipoUsuario() != null){
+            us.setTipoUsuario(usuario.getTipoUsuario());
+        }
+        if(usuario.getEmailUsuario() != null){
+            us.setEmailUsuario(usuario.getEmailUsuario());
+        }
+        if(usuario.getContraseñaUsuario() != null){
+            us.setContraseñaUsuario(usuario.getContraseñaUsuario());
+        }
+        return usuarioRepository.save(us);
+    }
+
+    public UsuarioDTO convertirADTO(Usuario usuario) {
+        UsuarioDTO dto = new UsuarioDTO();
+        dto.setRutUsuario(usuario.getRutUsuario());
+        dto.setNombreUsuario(usuario.getNombreUsuario());
+        dto.setApellidoPaterno(usuario.getApellidoPaterno());
+        dto.setEmailUsuario(usuario.getEmailUsuario());
+
+        if(usuario.getDireccion() != null) {
+            String direccionCompleta= usuario.getDireccion().getCalle() + " " + usuario.getDireccion().getNumeracion();
+            dto.setDireccion(direccionCompleta);
+        }else{
+            dto.setDireccion("Siempreviva 742");
+        }
+
+        List<Integer> numeroReservas = new ArrayList<>();
+        if(usuario.getReservas() != null) {
+            for(Reserva nexo : usuario.getReservas()){
+                numeroReservas.add(nexo.getNumeroReserva())
+            }
+        }
+        dto.setReservas(numeroReservas);
+
+        return dto;
+
+    }
+    
 }

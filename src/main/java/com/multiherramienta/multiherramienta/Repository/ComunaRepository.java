@@ -7,5 +7,5 @@ import com.multiherramienta.multiherramienta.Model.Comuna;
 
 @Repository
 public interface ComunaRepository extends JpaRepository<Comuna, Integer> {
-
+    
 }
