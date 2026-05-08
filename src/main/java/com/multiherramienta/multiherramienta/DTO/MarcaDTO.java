@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class MarcaDTO {
-    private Integer idDireccionDTO;
-    private String direccionCompletaDTO;
-    private String nombreComunaDTO;
+    private Integer idMarcaDTO;
+    private String nombreMarcaDTO;
 }
