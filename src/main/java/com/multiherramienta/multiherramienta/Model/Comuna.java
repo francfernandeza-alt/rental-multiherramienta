@@ -42,5 +42,5 @@ public class Comuna {
     private Region region;
 
     @OneToMany(mappedBy = "comuna")
-    private List<Usuario> usuarios;
+    private List<Direccion> direcciones;
 }
