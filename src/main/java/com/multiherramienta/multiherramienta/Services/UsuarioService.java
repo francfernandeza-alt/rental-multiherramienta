@@ -48,7 +48,7 @@ public class UsuarioService {
             us.setNombreUsuario(usuario.getNombreUsuario());
         }
         if(usuario.getApellidoPaterno() != null){
-            us.setApellidoPatern(usuario.getApellidoPaterno());
+            us.setApellidoPaterno(usuario.getApellidoPaterno());
         }
         if(usuario.getApellidoMaterno() != null){
             us.setApellidoMaterno(usuario.getApellidoMaterno());
