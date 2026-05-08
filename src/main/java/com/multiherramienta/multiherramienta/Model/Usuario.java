@@ -60,7 +60,7 @@ public class Usuario {
     private String contraseñaUsuario;
     
     @OneToMany(mappedBy = "usuario")
-    private List<Direccion> direcciones;
+    private List<Direccion> direccion;
 
     @OneToMany(mappedBy = "usuario")
     private List<Reserva> reservas;
