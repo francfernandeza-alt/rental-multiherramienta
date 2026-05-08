@@ -6,6 +6,8 @@ import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -59,8 +61,9 @@ public class Usuario {
     @Column(nullable = false, length = 8)
     private String contraseñaUsuario;
     
-    @OneToMany(mappedBy = "usuario")
-    private List<Direccion> direccion;
+    @ManyToOne
+    @JoinColumn(name = "idDireccion")
+    private Direccion direccion;
 
     @OneToMany(mappedBy = "usuario")
     private List<Reserva> reservas;
