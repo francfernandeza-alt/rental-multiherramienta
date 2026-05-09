@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.multiherramienta.multiherramienta.Model.TipoHerramienta;
 import com.multiherramienta.multiherramienta.Repository.TipoHerramientaRepository;
+import com.multiherramienta.multiherramienta.DTO.TipoHerramientaDTO;
 
 import jakarta.transaction.Transactional;
 
@@ -17,19 +18,53 @@ public class TipoHerramientaService {
     @Autowired
     private TipoHerramientaRepository tipoHerramientaRepository;
 
-    public List<TipoHerramienta> findAll() {
-        return tipoHerramientaRepository.findAll();
+    public List<TipoHerramientaDTO> findAll() {
+        return tipoHerramientaRepository.findAll().stream()
+                .map(this::convertirADTO)
+                .toList();
     }
 
-    public TipoHerramienta findById(Integer id) {
-        return tipoHerramientaRepository.findById(id).orElse(null);
+    public TipoHerramientaDTO findById(Integer id) {
+        TipoHerramienta tipoHerramienta = tipoHerramientaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tipo de herramienta no encontrado"));
+
+        return convertirADTO(tipoHerramienta);
     }
 
-    public TipoHerramienta save(TipoHerramienta tipoHerramienta) {
-        return tipoHerramientaRepository.save(tipoHerramienta);
+    public TipoHerramientaDTO save(TipoHerramienta tipoHerramienta) {
+        TipoHerramienta tipoHerramientaGuardado = tipoHerramientaRepository.save(tipoHerramienta);
+        return convertirADTO(tipoHerramientaGuardado);
     }
 
-    public void delete(Integer id) {
-        tipoHerramientaRepository.deleteById(id);
+    public TipoHerramientaDTO actualizarTipoHerramienta(Integer id, TipoHerramienta tipoHerramienta) {
+        TipoHerramienta tipoHerramientaEncontrado = tipoHerramientaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tipo de herramienta no encontrado"));
+
+        tipoHerramientaEncontrado.setNombreTipoHerramienta(tipoHerramienta.getNombreTipoHerramienta());
+        tipoHerramientaEncontrado.setDescripcionTipoHerramienta(tipoHerramienta.getDescripcionTipoHerramienta());
+
+        TipoHerramienta tipoHerramientaActualizado = tipoHerramientaRepository.save(tipoHerramientaEncontrado);
+        return convertirADTO(tipoHerramientaActualizado);
+    }
+
+    public String delete(Integer id) {
+        TipoHerramienta tipoHerramienta = tipoHerramientaRepository.findById(id).orElse(null);
+
+        if (tipoHerramienta != null) {
+            tipoHerramientaRepository.delete(tipoHerramienta);
+            return "Tipo de herramienta eliminado correctamente";
+        }
+
+        return "Tipo de herramienta no encontrado";
+    }
+
+    private TipoHerramientaDTO convertirADTO(TipoHerramienta tipoHerramienta) {
+        TipoHerramientaDTO dto = new TipoHerramientaDTO();
+
+        dto.setIdTipoHerramienta(tipoHerramienta.getIdTipoHerramienta());
+        dto.setNombreTipoHerramienta(tipoHerramienta.getNombreTipoHerramienta());
+        dto.setDescripcionTipoHerramienta(tipoHerramienta.getDescripcionTipoHerramienta());
+
+        return dto;
     }
 }
