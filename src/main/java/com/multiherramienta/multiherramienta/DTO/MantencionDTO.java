@@ -1,5 +1,10 @@
 package com.multiherramienta.multiherramienta.DTO;
+import lombok.Data;
 
-public class MnatencionDTO {
+@Data
 
+public class MantencionDTO {
+    private Integer id;
+    private String descripcion;
+    private String estado;
 }
