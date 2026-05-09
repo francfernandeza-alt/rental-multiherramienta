@@ -4,7 +4,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.multiherramienta.multiherramienta.Model.Mantencion;
 import com.multiherramienta.multiherramienta.Services.MantencionServices;
@@ -41,8 +48,10 @@ public class MantencionController {
         Mantencion obj = mantencionService.findById(id);
         if (obj == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        obj.setNombre(data.getNombre()); // ajusta según tu modelo
+        obj.setFechaUltimaMantencion(data.getFechaUltimaMantencion());
+        obj.setVigenciaMeses(data.getVigenciaMeses());
         obj.setDescripcion(data.getDescripcion());
+        obj.setEstado(data.getEstado());
 
         return new ResponseEntity<>(mantencionService.save(obj), HttpStatus.OK);
     }
