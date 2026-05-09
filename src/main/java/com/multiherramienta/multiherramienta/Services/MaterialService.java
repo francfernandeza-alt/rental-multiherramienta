@@ -61,9 +61,9 @@ public class MaterialService {
     private MaterialDTO convertirADTO(Material material) {
         MaterialDTO dto = new MaterialDTO();
 
-        dto.setIdMaterial(material.getIdMaterial());
-        dto.setNombreMaterial(material.getNombreMaterial());
-        dto.setDescripcionMaterial(material.getDescripcionMaterial());
+        dto.setIdMaterialDTO(material.getIdMaterial());
+        dto.setNombreMaterialDTO(material.getNombreMaterial());
+        dto.setDescripcionMaterialDTO(material.getDescripcionMaterial());
 
         return dto;
     }
