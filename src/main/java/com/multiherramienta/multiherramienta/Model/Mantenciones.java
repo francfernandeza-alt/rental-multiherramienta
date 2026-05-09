@@ -1,7 +1,13 @@
 package com.multiherramienta.multiherramienta.Model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,15 +18,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "TipoMantencion")
+@Table(name = "Mantenciones")
 public class Mantenciones {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idTipoMantencion;
+    private Integer idMantenciones;
 
-    @NotBlank(message = "El nombre es obligatorio")
-    @Column(nullable = false, length = 100, unique = true)
-    private String nombre;
-    
+    @NotNull(message = "La herramienta es obligatoria")
+    @ManyToOne
+    @JoinColumn(name = "idHerramienta", nullable = false)
+    private Herramienta herramienta;
+
+    @NotNull(message = "La mantención es obligatoria")
+    @ManyToOne
+    @JoinColumn(name = "idMantencion", nullable = false)
+    private Mantencion mantencion;
 }
 
