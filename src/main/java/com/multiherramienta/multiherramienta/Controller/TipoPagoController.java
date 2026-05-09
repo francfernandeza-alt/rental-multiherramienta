@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/v1/tipopagos")
 public class TipoPagoController {
-  @Autowired
+    @Autowired
     private TipoPagoServices service;
 
     @GetMapping

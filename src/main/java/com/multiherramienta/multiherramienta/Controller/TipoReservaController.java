@@ -1,5 +1,7 @@
 package com.multiherramienta.multiherramienta.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ import com.multiherramienta.multiherramienta.Services.TipoReservaService;
 @RequestMapping("/api/v1/tiporeservas")
 public class TipoReservaController {
 
- @Autowired
+    @Autowired
     private TipoReservaService service;
 
     @GetMapping

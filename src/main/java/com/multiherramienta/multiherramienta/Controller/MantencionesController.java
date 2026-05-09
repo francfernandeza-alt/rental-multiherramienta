@@ -16,7 +16,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/v1/mantenciones")
 public class MantencionesController {
- @Autowired
+    @Autowired
     private TipoReservaService service;
 
     @GetMapping

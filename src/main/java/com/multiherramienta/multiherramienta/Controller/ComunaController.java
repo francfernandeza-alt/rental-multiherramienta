@@ -28,7 +28,7 @@ public class ComunaController {
 
     @GetMapping
     public ResponseEntity<?> listarComunas() {
-        List<ComunaDTO> comunas = comunaService.findAll();
+        List<Comuna> comunas = comunaService.findAll();
 
         if (comunas.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -40,7 +40,7 @@ public class ComunaController {
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarComuna(@PathVariable Integer id) {
         try {
-            ComunaDTO comuna = comunaService.findById(id);
+            Comuna comuna = comunaService.findById(id);
             return new ResponseEntity<>(comuna, HttpStatus.OK);
         } catch (RuntimeException e){
             return new ResponseEntity<>("Comuna no encontrada", HttpStatus.NOT_FOUND);
