@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class Materiales {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idMateriales;
 
     @ManyToOne
