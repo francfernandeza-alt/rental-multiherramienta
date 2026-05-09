@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class HerramientaDTO {
-    private Integer idHerramientaDAO;
-    private String nombreHerramientaDAO;
-    private String estadoHerramientaDAO;
-    private Integer cantidadDisponibleDAO;
-    private String nombreMarca;
+    private Integer idHerramientaDTO;
+    private String nombreHerramientaDTO;
+    private String estadoHerramientaDTO;
+    private Integer cantidadDisponibleDtO;
+    private String nombreMarcaDTO;
 
 }
