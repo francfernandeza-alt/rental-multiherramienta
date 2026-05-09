@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.multiherramienta.multiherramienta.Model.Material;
 import com.multiherramienta.multiherramienta.Repository.MaterialRepository;
+import com.multiherramienta.multiherramienta.DTO.MaterialDTO;
 
 import jakarta.transaction.Transactional;
 
@@ -17,19 +18,53 @@ public class MaterialService {
     @Autowired
     private MaterialRepository materialRepository;
 
-    public List<Material> findAll() {
-        return materialRepository.findAll();
+    public List<MaterialDTO> findAll() {
+        return materialRepository.findAll().stream()
+                .map(this::convertirADTO)
+                .toList();
     }
 
-    public Material findById(Integer id) {
-        return materialRepository.findById(id).orElse(null);
+    public MaterialDTO findById(Integer id) {
+        Material material = materialRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Material no encontrado"));
+
+        return convertirADTO(material);
     }
 
-    public Material save(Material material) {
-        return materialRepository.save(material);
+    public MaterialDTO save(Material material) {
+        Material materialGuardado = materialRepository.save(material);
+        return convertirADTO(materialGuardado);
     }
 
-    public void delete(Integer id) {
-        materialRepository.deleteById(id);
+    public MaterialDTO actualizarMaterial(Integer id, Material material) {
+        Material materialEncontrado = materialRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Material no encontrado"));
+
+        materialEncontrado.setNombreMaterial(material.getNombreMaterial());
+        materialEncontrado.setDescripcionMaterial(material.getDescripcionMaterial());
+
+        Material materialActualizado = materialRepository.save(materialEncontrado);
+        return convertirADTO(materialActualizado);
+    }
+
+    public String delete(Integer id) {
+        Material material = materialRepository.findById(id).orElse(null);
+
+        if (material != null) {
+            materialRepository.delete(material);
+            return "Material eliminado correctamente";
+        }
+
+        return "Material no encontrado";
+    }
+
+    private MaterialDTO convertirADTO(Material material) {
+        MaterialDTO dto = new MaterialDTO();
+
+        dto.setIdMaterial(material.getIdMaterial());
+        dto.setNombreMaterial(material.getNombreMaterial());
+        dto.setDescripcionMaterial(material.getDescripcionMaterial());
+
+        return dto;
     }
 }
