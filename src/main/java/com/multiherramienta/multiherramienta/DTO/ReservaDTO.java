@@ -10,7 +10,7 @@ public class ReservaDTO {
     private Integer numeroReservaDTO;
     private LocalDateTime fechaInicioDTO;
     private LocalDateTime fechaFinDTO;
-    private  String estadoReservaDTO;
+    private String estadoReservaDTO;
     private String rutUsuarioDTO;
     private String nombreCompletoUsuarioDTO;
     private List <String> nombreHerramientas;

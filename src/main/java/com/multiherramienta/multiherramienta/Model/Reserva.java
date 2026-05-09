@@ -37,7 +37,7 @@ public class Reserva {
 
     @NotNull
     @Column(nullable = false)
-    private LocalDateTime fechafin;
+    private LocalDateTime fechaFin;
 
     @NotBlank (message = "El estado es obligatorio")
     @Size(min = 2, max = 50, message = "El estado debe tener entre 2 y 50 caracteres")
