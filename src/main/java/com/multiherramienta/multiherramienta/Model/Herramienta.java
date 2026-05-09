@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Herramientas")
+@Table(name = "Herramienta")
 public class Herramienta {
 
     @Id
@@ -68,11 +68,10 @@ public class Herramienta {
     @OneToMany(mappedBy = "herramienta")
     private List<Mantenciones> mantenciones;
 
-    @OneToMany(mappedBy = "herramientas")
+    @OneToMany(mappedBy = "herramienta")
     private List<Materiales> materiales;
 
     @ManyToOne
     @JoinColumn(name = "idMarca", nullable = false)
     private Marca marca;
-
 }

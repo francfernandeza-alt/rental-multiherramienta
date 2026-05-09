@@ -7,27 +7,25 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Materiales")
-public class Materiales {
+@Table(name = "Herramientas")
+public class Herramientas {
 
     @Id
     @NotNull
-    private Integer idMateriales;
+    private Integer idHerramientas;
 
     @ManyToOne
-    @JoinColumn(name = "idHerramienta", nullable = false)
+    @JoinColumn(name = "idHerrramienta", nullable = false)
     private Herramienta herramienta;
 
     @ManyToOne
-    @JoinColumn(name = "idMaterial", nullable = false)
-    private Material material;
+    @JoinColumn(name = "idReserva", nullable = false)
+    private Reserva reserva;
 }

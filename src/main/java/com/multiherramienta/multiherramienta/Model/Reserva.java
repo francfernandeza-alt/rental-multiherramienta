@@ -49,8 +49,8 @@ public class Reserva {
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name= "idMetodoPago", nullable = false)
-    private MetodoPago metodoPago;
+    @JoinColumn(name= "idTipoPago", nullable = false)
+    private TipoPago tipoPago;
 
     @ManyToOne
     @JoinColumn(name= "idTipoReserva", nullable = false)
@@ -58,5 +58,5 @@ public class Reserva {
 
     @OneToMany(mappedBy = "reserva")
     private List<Herramientas> herramientas;
-
+    
 }
