@@ -2,6 +2,8 @@ package com.multiherramienta.multiherramienta.Model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class Herramientas {
 
     @Id
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idHerramientas;
 
     @NotNull
@@ -39,7 +41,7 @@ public class Herramientas {
     private String nombreCompletoUsuario;
 
     @ManyToOne
-    @JoinColumn(name = "idHerrramienta", nullable = false)
+    @JoinColumn(name = "idHerramienta", nullable = false)
     private Herramienta herramienta;
 
     @ManyToOne
