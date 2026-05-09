@@ -1,4 +1,5 @@
 package com.multiherramienta.multiherramienta.Services;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,8 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class TipoReservaService {
-@Autowired
+
+    @Autowired
     private TipoReservaRepository tipoReservaRepository;
 
     public List<TipoReserva> findAll() {
@@ -27,7 +29,25 @@ public class TipoReservaService {
         return tipoReservaRepository.save(tipoReserva);
     }
 
-    public void delete(Integer id) {
-        tipoReservaRepository.deleteById(id);
+    public TipoReserva actualizarTipoReserva(Integer id, TipoReserva tipoReserva) {
+        TipoReserva tipoReservaEncontrado = tipoReservaRepository.findById(id).orElse(null);
+
+        if (tipoReservaEncontrado != null) {
+            tipoReservaEncontrado.setNombreTipoReserva(tipoReserva.getNombreTipoReserva());
+            return tipoReservaRepository.save(tipoReservaEncontrado);
+        }
+
+        return null;
+    }
+
+    public String delete(Integer id) {
+        TipoReserva tipoReserva = tipoReservaRepository.findById(id).orElse(null);
+
+        if (tipoReserva != null) {
+            tipoReservaRepository.delete(tipoReserva);
+            return "Tipo de reserva eliminado correctamente";
+        }
+
+        return "Tipo de reserva no encontrado";
     }
 }
