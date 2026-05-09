@@ -1,16 +1,12 @@
 package com.multiherramienta.multiherramienta.Services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.multiherramienta.multiherramienta.DTO.MarcaDTO;
-import com.multiherramienta.multiherramienta.DTO.UsuarioDTO;
 import com.multiherramienta.multiherramienta.Model.Marca;
-import com.multiherramienta.multiherramienta.Model.Reserva;
-import com.multiherramienta.multiherramienta.Model.Usuario;
 import com.multiherramienta.multiherramienta.Repository.MarcaRepository;
 
 import jakarta.transaction.Transactional;
