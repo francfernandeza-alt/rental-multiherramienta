@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.multiherramienta.multiherramienta.DTO.ComunaDTO;
+import com.multiherramienta.multiherramienta.DTO.MaterialDTO;
 import com.multiherramienta.multiherramienta.Model.Comuna;
+import com.multiherramienta.multiherramienta.Model.Material;
 import com.multiherramienta.multiherramienta.Repository.ComunaRepository;
 
 import jakarta.transaction.Transactional;
@@ -48,5 +51,19 @@ public class ComunaService {
         comunaEncontrada.setRegion(comuna.getRegion());
 
         return comunaRepository.save(comunaEncontrada);
+    }
+
+    private ComunaDTO convertirADTO(Comuna comuna) {
+        ComunaDTO dto = new ComunaDTO();
+
+        dto.setIdComunaDTO(comuna.getIdComuna());
+        dto.setNombreComunaDTO(comuna.getNombreComuna());
+        
+        if (comuna.getRegion() != null) {
+            dto.setNumeroRegionDTO(comuna.getRegion().getNumeroRegion());
+            dto.setNombreRegionDTO(comuna.getRegion().getNombreRegion());
+        }
+
+        return dto;
     }
 }
