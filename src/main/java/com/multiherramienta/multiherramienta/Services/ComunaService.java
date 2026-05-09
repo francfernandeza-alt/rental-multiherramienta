@@ -51,17 +51,4 @@ public class ComunaService {
         return comunaRepository.save(comunaEncontrada);
     }
 
-    private ComunaDTO convertirADTO(Comuna comuna) {
-        ComunaDTO dto = new ComunaDTO();
-
-        dto.setIdComunaDTO(comuna.getIdComuna());
-        dto.setNombreComunaDTO(comuna.getNombreComuna());
-        
-        if (comuna.getRegion() != null) {
-            dto.setNumeroRegionDTO(comuna.getRegion().getNumeroRegion());
-            dto.setNombreRegionDTO(comuna.getRegion().getNombreRegion());
-        }
-
-        return dto;
-    }
 }
