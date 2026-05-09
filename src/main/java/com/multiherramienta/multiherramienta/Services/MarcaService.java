@@ -59,6 +59,7 @@ public class MarcaService {
     public MarcaDTO convertirADTO(Marca marca) {
         MarcaDTO dto = new MarcaDTO();
         dto.setIdMarcaDTO(marca.getIdMarca());
+        dto.setNombreMarcaDTO(marca.getNombreMarca());
         return dto;
     }
 }
