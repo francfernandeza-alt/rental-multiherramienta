@@ -1,5 +1,9 @@
 package com.multiherramienta.multiherramienta.Repository;
 
-public interface MantencionesRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.multiherramienta.multiherramienta.Model.Mantenciones;
+
+public interface MantencionesRepository extends JpaRepository<Mantenciones, Integer> {
 
 }

@@ -1,5 +1,11 @@
 package com.multiherramienta.multiherramienta.Repository;
 
-public interface TipoPagoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.multiherramienta.multiherramienta.Model.TipoPago;
+
+@Repository
+public interface TipoPagoRepository  extends JpaRepository<TipoPago, Integer> {
 
 }
