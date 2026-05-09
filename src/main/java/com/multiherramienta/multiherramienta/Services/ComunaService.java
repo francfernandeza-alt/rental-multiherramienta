@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.multiherramienta.multiherramienta.DTO.ComunaDTO;
-import com.multiherramienta.multiherramienta.DTO.MaterialDTO;
 import com.multiherramienta.multiherramienta.Model.Comuna;
-import com.multiherramienta.multiherramienta.Model.Material;
 import com.multiherramienta.multiherramienta.Repository.ComunaRepository;
 
 import jakarta.transaction.Transactional;
