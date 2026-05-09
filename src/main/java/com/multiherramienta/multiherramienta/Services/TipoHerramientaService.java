@@ -31,9 +31,8 @@ public class TipoHerramientaService {
         return convertirADTO(tipoHerramienta);
     }
 
-    public TipoHerramientaDTO save(TipoHerramienta tipoHerramienta) {
-        TipoHerramienta tipoHerramientaGuardado = tipoHerramientaRepository.save(tipoHerramienta);
-        return convertirADTO(tipoHerramientaGuardado);
+    public TipoHerramienta save(TipoHerramienta tipoHerramienta) {
+        return tipoHerramientaRepository.save(tipoHerramienta);
     }
 
     public TipoHerramientaDTO actualizarTipoHerramienta(Integer id, TipoHerramienta tipoHerramienta) {
