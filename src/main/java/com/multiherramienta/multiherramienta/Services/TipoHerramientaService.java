@@ -18,10 +18,8 @@ public class TipoHerramientaService {
     @Autowired
     private TipoHerramientaRepository tipoHerramientaRepository;
 
-    public List<TipoHerramientaDTO> findAll() {
-        return tipoHerramientaRepository.findAll().stream()
-                .map(this::convertirADTO)
-                .toList();
+    public List<TipoHerramienta> findAll() {
+        return tipoHerramientaRepository.findAll();
     }
 
     public TipoHerramientaDTO findById(Integer id) {
