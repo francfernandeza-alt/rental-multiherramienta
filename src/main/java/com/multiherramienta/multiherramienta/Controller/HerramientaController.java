@@ -64,7 +64,7 @@ public class HerramientaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Herramienta> actualizarUsuario(@PathVariable Integer id, @RequestBody Herramienta herramienta){
+    public ResponseEntity<Herramienta> actualizarHerramienta(@PathVariable Integer id, @RequestBody Herramienta herramienta){
         try{
             Herramienta newTool = herramientaService.actualizarHerramienta(id, herramienta);
             return new ResponseEntity<>(newTool, HttpStatus.OK);

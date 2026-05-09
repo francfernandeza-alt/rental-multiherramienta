@@ -1,10 +1,13 @@
 package com.multiherramienta.multiherramienta.Services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.multiherramienta.multiherramienta.DTO.HerramientaDTO;
+import com.multiherramienta.multiherramienta.Model.Herramienta;
 import com.multiherramienta.multiherramienta.Model.Herramientas;
 import com.multiherramienta.multiherramienta.Repository.HerramientasRepository;
 
@@ -25,6 +28,11 @@ public class HerramientasService {
         return herramientasRepository.findAll();
     }
 
+    public Herramientas buscarPorId(Integer id) {
+        Herramientas reseña = herramientasRepository.findById(id).orElseThrow(()-> new RuntimeException("Reseña no encontrada"));
+        return reseña;
+    }
+
     public String eliminar(Integer id) {
         try {
             Herramientas herramientas = herramientasRepository.findById(id).orElseThrow(() -> new RuntimeException("Herramienta con Id  " + id + " no existe."));
@@ -35,13 +43,15 @@ public class HerramientasService {
         }
     }
 
-    public List<String> obtenerResenasConUsuario() {
-        return herramientasRepository.findAll().stream().map(nexo -> {String nombreUsuario = "";
-        if (nexo.getReserva() != null && nexo.getReserva().getUsuario() != null) {
-            nombreUsuario = nexo.getReserva().getUsuario().getNombreUsuario();
-        }
-        return "Reseña: " + nexo.getReseña() +" Puntuación: " + nexo.getPuntuacion() + "Usuario: " + nombreUsuario;
-        })
-        .toList();
+    public List<String> reseñasPorRutUsuario(String rutUsuario) {
+    return herramientasRepository.findAll().stream()
+            .filter(nexo -> nexo.getReserva() != null && nexo.getReserva().getUsuario() != null &&
+            nexo.getReserva().getUsuario().getRutUsuario().equalsIgnoreCase(rutUsuario))
+            .map(nexo -> "Reseña: " + nexo.getReseña() +
+            "Puntuación: " + nexo.getPuntuacion() +
+            "Usuario: " + nexo.getReserva().getUsuario().getNombreUsuario() + " " +
+            nexo.getReserva().getUsuario().getApellidoPaterno() + " " +
+            nexo.getReserva().getUsuario().getApellidoMaterno()).toList();
     }
+
 }
