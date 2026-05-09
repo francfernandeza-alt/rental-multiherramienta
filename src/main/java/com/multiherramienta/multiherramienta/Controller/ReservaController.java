@@ -15,72 +15,72 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.multiherramienta.multiherramienta.DTO.HerramientaDTO;
-import com.multiherramienta.multiherramienta.Model.Herramienta;
-import com.multiherramienta.multiherramienta.Services.HerramientaService;
+import com.multiherramienta.multiherramienta.DTO.ReservaDTO;
+import com.multiherramienta.multiherramienta.Model.Reserva;
+import com.multiherramienta.multiherramienta.Services.ReservaService;
+
 @RestController
-@RequestMapping("/api/v1/herramientas")
-public class HerramientaController {
+@RequestMapping("/api/v1/reservas")
+public class ReservaController {
     @Autowired
-    private HerramientaService herramientaService;
-    
+    private ReservaService reservaService;
+
     @GetMapping
-    public ResponseEntity<List<HerramientaDTO>> todosLasHerramientas() {
-        List<HerramientaDTO> herramienta = herramientaService.obtenerTodos();
-        if (herramienta.isEmpty()) {
+    public ResponseEntity<List<ReservaDTO>> todosLasReservas() {
+        List<ReservaDTO> reserva = reservaService.obtenerTodos();
+        if (reserva.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(herramienta, HttpStatus.OK);
+        return new ResponseEntity<>(reserva, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<HerramientaDTO> buscarPorId(@PathVariable Integer id) {
+    @GetMapping("/reservas/{id}")
+    public ResponseEntity<ReservaDTO> buscarPorId(@PathVariable Integer numReserva) {
         try {
-            HerramientaDTO her = herramientaService.buscarPorId(id);
-            return new ResponseEntity<>(her, HttpStatus.OK);
+            ReservaDTO res = reservaService.buscarpornumReserva(numReserva);
+            return new ResponseEntity<>(res, HttpStatus.OK);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<Herramienta> agregarherramienta(@RequestBody Herramienta herramienta) {
+    public ResponseEntity<Reserva> agregarReserva(@RequestBody Reserva reserva) {
         try {
-            Herramienta guardada = herramientaService.guardarHerramienta(herramienta);
+            Reserva guardada = reservaService.guardarReserva(reserva);
             return new ResponseEntity<>(guardada, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Herramienta> editarHerramienta(@PathVariable Integer id, @RequestBody Herramienta herramienta) {
+    @PatchMapping("/reservas/{id}")
+    public ResponseEntity<Reserva> editarReserva(@PathVariable Integer numReserva, @RequestBody Reserva reserva) {
         try {
-            Herramienta editada = herramientaService.guardarHerramienta(herramienta);
+            Reserva editada = reservaService.guardarReserva(reserva);
             return new ResponseEntity<>(editada, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Herramienta> actualizarHerramienta(@PathVariable Integer id, @RequestBody Herramienta herramienta){
+    @PutMapping("/reservas/{id}")
+    public ResponseEntity<Reserva> actualizarReserva(@PathVariable Integer numReserva, @RequestBody Reserva reserva){
         try{
-            Herramienta newTool = herramientaService.actualizarHerramienta(id, herramienta);
-            return new ResponseEntity<>(newTool, HttpStatus.OK);
+            Reserva nuevaReserva = reservaService.actualizarReserva(numReserva, reserva);
+            return new ResponseEntity<>(nuevaReserva, HttpStatus.OK);
         }catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarHerramienta(@PathVariable Integer id) {
-        String resultado = herramientaService.eliminar(id);
+    @DeleteMapping("/reserva/{id}")
+    public ResponseEntity<String> eliminarReserva(@PathVariable Integer numReserva) {
+        String resultado = reservaService.eliminar(numReserva);
         if (resultado.contains("eliminada")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
         }
     }
-
 }
