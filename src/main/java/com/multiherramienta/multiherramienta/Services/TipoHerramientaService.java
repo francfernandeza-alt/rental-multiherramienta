@@ -58,9 +58,9 @@ public class TipoHerramientaService {
     private TipoHerramientaDTO convertirADTO(TipoHerramienta tipoHerramienta) {
         TipoHerramientaDTO dto = new TipoHerramientaDTO();
 
-        dto.setIdTipoHerramienta(tipoHerramienta.getIdTipoHerramienta());
-        dto.setNombreTipoHerramienta(tipoHerramienta.getNombreTipoHerramienta());
-        dto.setDescripcionTipoHerramienta(tipoHerramienta.getDescripcionTipoHerramienta());
+        dto.setIdTipoHerramientaDTO(tipoHerramienta.getIdTipoHerramienta());
+        dto.setNombreTipoHerramientaDTO(tipoHerramienta.getNombreTipoHerramienta());
+        dto.setDescripcionTipoHerramientaDTO(tipoHerramienta.getDescripcionTipoHerramienta());
 
         return dto;
     }
