@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.multiherramienta.multiherramienta.Model.Material;
 import com.multiherramienta.multiherramienta.Services.MaterialService;
+import com.multiherramienta.multiherramienta.DTO.MaterialDTO;
 
 import jakarta.validation.Valid;
 
@@ -27,8 +28,8 @@ public class MaterialController {
     private MaterialService materialService;
 
     @GetMapping
-    public ResponseEntity<List<Material>> listarMateriales() {
-        List<Material> materiales = materialService.findAll();
+    public ResponseEntity<?> listarMateriales() {
+        List<MaterialDTO> materiales = materialService.findAll();
 
         if (materiales.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -38,46 +39,43 @@ public class MaterialController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Material> buscarMaterial(@PathVariable Integer id) {
-        Material material = materialService.findById(id);
-
-        if (material != null) {
+    public ResponseEntity<?> buscarMaterial(@PathVariable Integer id) {
+        try {
+            MaterialDTO material = materialService.findById(id);
             return new ResponseEntity<>(material, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Material no encontrado", HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<Material> crearMaterial(@Valid @RequestBody Material material) {
-        Material nuevoMaterial = materialService.save(material);
-        return new ResponseEntity<>(nuevoMaterial, HttpStatus.CREATED);
+    public ResponseEntity<?> crearMaterial(@Valid @RequestBody Material material) {
+        try {
+            MaterialDTO nuevoMaterial = materialService.save(material);
+            return new ResponseEntity<>(nuevoMaterial, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("No se pudo crear el material", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Material> actualizarMaterial(@PathVariable Integer id, @Valid @RequestBody Material material) {
-        Material materialEncontrado = materialService.findById(id);
-
-        if (materialEncontrado != null) {
-            materialEncontrado.setNombreMaterial(material.getNombreMaterial());
-            materialEncontrado.setDescripcionMaterial(material.getDescripcionMaterial());
-
-            Material materialActualizado = materialService.save(materialEncontrado);
+    public ResponseEntity<?> actualizarMaterial(@PathVariable Integer id, @Valid @RequestBody Material material) {
+        try {
+            MaterialDTO materialActualizado = materialService.actualizarMaterial(id, material);
             return new ResponseEntity<>(materialActualizado, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Material no encontrado", HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarMaterial(@PathVariable Integer id) {
-        Material material = materialService.findById(id);
+    public ResponseEntity<?> eliminarMaterial(@PathVariable Integer id) {
+        String resultado = materialService.delete(id);
 
-        if (material != null) {
-            materialService.delete(id);
-            return new ResponseEntity<>("Material eliminado", HttpStatus.OK);
+        if (resultado.contains("correctamente")) {
+            return new ResponseEntity<>(resultado, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("Material no encontrado", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
     }
 }
