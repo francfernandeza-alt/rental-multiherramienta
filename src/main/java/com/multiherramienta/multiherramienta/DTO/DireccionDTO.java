@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class DireccionDTO {
-    private Integer idDireccionDTO;
-    private String direccionCompletaDTO;
-    private String nombreComunaDTO;
+    private Integer id;
+    private String calle;
+    private Integer numero;
+    private String comuna;
 }
