@@ -55,7 +55,7 @@ public class DireccionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizar(@PathVariable Integer id, @RequestBody Direccion data) {
+    public ResponseEntity<?> actualizar(@PathVariable Integer id, @RequestBody Direccion direccion) {
         Direccion direccionActualizada = direccionService.actualizarDireccion(id, direccion);
 
         if (direccionActualizada != null) {
