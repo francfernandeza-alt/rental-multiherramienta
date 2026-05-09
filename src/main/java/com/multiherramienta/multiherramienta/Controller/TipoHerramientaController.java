@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.multiherramienta.multiherramienta.Model.TipoHerramienta;
 import com.multiherramienta.multiherramienta.Services.TipoHerramientaService;
+import com.multiherramienta.multiherramienta.DTO.TipoHerramientaDTO;
 
 import jakarta.validation.Valid;
 
@@ -27,8 +28,8 @@ public class TipoHerramientaController {
     private TipoHerramientaService tipoHerramientaService;
 
     @GetMapping
-    public ResponseEntity<List<TipoHerramienta>> listarTiposHerramienta() {
-        List<TipoHerramienta> tiposHerramienta = tipoHerramientaService.findAll();
+    public ResponseEntity<?> listarTiposHerramienta() {
+        List<TipoHerramientaDTO> tiposHerramienta = tipoHerramientaService.findAll();
 
         if (tiposHerramienta.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -38,52 +39,43 @@ public class TipoHerramientaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TipoHerramienta> buscarTipoHerramienta(@PathVariable Integer id) {
-        TipoHerramienta tipoHerramienta = tipoHerramientaService.findById(id);
-
-        if (tipoHerramienta != null) {
+    public ResponseEntity<?> buscarTipoHerramienta(@PathVariable Integer id) {
+        try {
+            TipoHerramientaDTO tipoHerramienta = tipoHerramientaService.findById(id);
             return new ResponseEntity<>(tipoHerramienta, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Tipo de herramienta no encontrado", HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<TipoHerramienta> crearTipoHerramienta(@Valid @RequestBody TipoHerramienta tipoHerramienta) {
-        TipoHerramienta nuevoTipoHerramienta = tipoHerramientaService.save(tipoHerramienta);
-
-        if (nuevoTipoHerramienta != null) {
+    public ResponseEntity<?> crearTipoHerramienta(@Valid @RequestBody TipoHerramienta tipoHerramienta) {
+        try {
+            TipoHerramientaDTO nuevoTipoHerramienta = tipoHerramientaService.save(tipoHerramienta);
             return new ResponseEntity<>(nuevoTipoHerramienta, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("No se pudo crear el tipo de herramienta", HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TipoHerramienta> actualizarTipoHerramienta(@PathVariable Integer id,@Valid @RequestBody TipoHerramienta tipoHerramienta) {
-
-        TipoHerramienta tipoHerramientaEncontrado = tipoHerramientaService.findById(id);
-
-        if (tipoHerramientaEncontrado != null) {
-            tipoHerramientaEncontrado.setNombreTipoHerramienta(tipoHerramienta.getNombreTipoHerramienta());
-            tipoHerramientaEncontrado.setDescripcionTipoHerramienta(tipoHerramienta.getDescripcionTipoHerramienta());
-
-            TipoHerramienta tipoHerramientaActualizado = tipoHerramientaService.save(tipoHerramientaEncontrado);
+    public ResponseEntity<?> actualizarTipoHerramienta(@PathVariable Integer id,@Valid @RequestBody TipoHerramienta tipoHerramienta) {
+        try {
+            TipoHerramientaDTO tipoHerramientaActualizado = tipoHerramientaService.actualizarTipoHerramienta(id, tipoHerramienta);
             return new ResponseEntity<>(tipoHerramientaActualizado, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Tipo de herramienta no encontrado", HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarTipoHerramienta(@PathVariable Integer id) {
-        TipoHerramienta tipoHerramienta = tipoHerramientaService.findById(id);
+    public ResponseEntity<?> eliminarTipoHerramienta(@PathVariable Integer id) {
+        String resultado = tipoHerramientaService.delete(id);
 
-        if (tipoHerramienta != null) {
-            tipoHerramientaService.delete(id);
-            return new ResponseEntity<>("Tipo de herramienta eliminado", HttpStatus.OK);
+        if (resultado.contains("correctamente")) {
+            return new ResponseEntity<>(resultado, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("Tipo de herramienta no encontrado", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
     }
 }

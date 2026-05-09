@@ -27,8 +27,8 @@ public class ComunaController {
     private ComunaService comunaService;
 
     @GetMapping
-    public ResponseEntity<List<Comuna>> listarComunas() {
-        List<Comuna> comunas = comunaService.findAll();
+    public ResponseEntity<?> listarComunas() {
+        List<ComunaDTO> comunas = comunaService.findAll();
 
         if (comunas.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -38,51 +38,43 @@ public class ComunaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Comuna> buscarComuna(@PathVariable Integer id) {
-        Comuna comuna = comunaService.findById(id);
-
-        if (comuna != null) {
+    public ResponseEntity<?> buscarComuna(@PathVariable Integer id) {
+        try {
+            ComunaDTO comuna = comunaService.findById(id);
             return new ResponseEntity<>(comuna, HttpStatus.OK);
+        } catch (RuntimeException e){
+            return new ResponseEntity<>("Comuna no encontrada", HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<Comuna> crearComuna(@Valid @RequestBody Comuna comuna) {
-        Comuna nuevaComuna = comunaService.save(comuna);
-
-        if (nuevaComuna != null) {
+    public ResponseEntity<?> crearComuna(@Valid @RequestBody Comuna comuna) {
+        try {
+            Comuna nuevaComuna = comunaService.save(comuna);
             return new ResponseEntity<>(nuevaComuna, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("No se pudo crear la comuna", HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Comuna> actualizarComuna(@PathVariable Integer id, @Valid @RequestBody Comuna comuna) {
-        Comuna comunaEncontrada = comunaService.findById(id);
-
-        if (comunaEncontrada != null) {
-            comunaEncontrada.setNombreComuna(comuna.getNombreComuna());
-            comunaEncontrada.setRegion(comuna.getRegion());
-
-            Comuna comunaActualizada = comunaService.save(comunaEncontrada);
+    public ResponseEntity<?> actualizarComuna(@PathVariable Integer id, @Valid @RequestBody Comuna comuna) {
+        try {
+            Comuna comunaActualizada = comunaService.actualizarComuna(id, comuna);
             return new ResponseEntity<>(comunaActualizada, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Comuna no encontrada", HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarComuna(@PathVariable Integer id) {
-        Comuna comuna = comunaService.findById(id);
+    public ResponseEntity<?> eliminarComuna(@PathVariable Integer id) {
+        String resultado = comunaService.delete(id);
 
-        if (comuna != null) {
-            comunaService.delete(id);
-            return new ResponseEntity<>("Comuna eliminada", HttpStatus.OK);
+        if (resultado.contains("correctamente")) {
+            return new ResponseEntity<>(resultado, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("Comuna no encontrada", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
     }
 }
