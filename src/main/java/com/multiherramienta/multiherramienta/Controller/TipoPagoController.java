@@ -2,8 +2,16 @@ package com.multiherramienta.multiherramienta.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.multiherramienta.multiherramienta.Model.TipoPago;
 import com.multiherramienta.multiherramienta.Services.TipoPagoServices;
@@ -40,7 +48,11 @@ public class TipoPagoController {
         TipoPago obj = service.findById(id);
         if (obj == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        obj.setNombre(data.getNombre());
+        obj.setMonto(data.getMonto());
+        obj.setFechaPago(data.getFechaPago());
+        obj.setEstadoPago(data.getEstadoPago());
+        obj.setMetodoPago(data.getMetodoPago());
+        obj.setReserva(data.getReserva());
 
         return new ResponseEntity<>(service.save(obj), HttpStatus.OK);
     }
