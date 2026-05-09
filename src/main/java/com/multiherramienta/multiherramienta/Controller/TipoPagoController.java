@@ -44,15 +44,13 @@ public class TipoPagoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TipoPago> actualizar(@PathVariable Integer id, @RequestBody TipoPago data) {
+    public ResponseEntity<TipoPago> actualizar(@PathVariable Integer id, @RequestBody TipoPago tipopago) {
         TipoPago obj = service.findById(id);
         if (obj == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        obj.setMonto(data.getMonto());
-        obj.setFechaPago(data.getFechaPago());
-        obj.setEstadoPago(data.getEstadoPago());
-        obj.setMetodoPago(data.getMetodoPago());
-        obj.setReserva(data.getReserva());
+        obj.setIdTipoPago(tipopago.getIdTipoPago());
+        obj.setMetodoPago(tipopago.getMetodoPago());
+
 
         return new ResponseEntity<>(service.save(obj), HttpStatus.OK);
     }
