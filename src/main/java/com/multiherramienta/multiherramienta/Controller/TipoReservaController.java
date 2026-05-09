@@ -46,7 +46,7 @@ public class TipoReservaController {
         TipoReserva obj = service.findById(id);
         if (obj == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        obj.setNombre(data.getNombre());
+        obj.setNombreTipoReserva(data.getNombreTipoReserva());
 
         return new ResponseEntity<>(service.save(obj), HttpStatus.OK);
     }
