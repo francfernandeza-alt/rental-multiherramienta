@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class MaterialDTO {
 
-    private Integer idMaterial;
-    private String nombreMaterial;
-    private String descripcionMaterial;
+    private Integer idMaterialDTO;
+    private String nombreMaterialDTO;
+    private String descripcionMaterialDTO;
 }
