@@ -29,7 +29,24 @@ public class ComunaService {
         return comunaRepository.save(comuna);
     }
 
-    public void delete(Integer id) {
-        comunaRepository.deleteById(id);
+    public String delete(Integer id) {
+        Comuna comuna = comunaRepository.findById(id).orElse(null);
+
+        if (comuna != null) {
+            comunaRepository.delete(comuna);
+            return "Comuna eliminada correctamente";
+        }
+
+        return "Comuna no encontrada";
+    }
+
+    public Comuna actualizarComuna(Integer id, Comuna comuna) {
+        Comuna comunaEncontrada = comunaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Comuna no encontrada"));
+
+        comunaEncontrada.setNombreComuna(comuna.getNombreComuna());
+        comunaEncontrada.setRegion(comuna.getRegion());
+
+        return comunaRepository.save(comunaEncontrada);
     }
 }
