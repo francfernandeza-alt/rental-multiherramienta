@@ -1,4 +1,5 @@
 package com.multiherramienta.multiherramienta.Controller;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,43 +22,61 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/v1/tipopagos")
 public class TipoPagoController {
+
     @Autowired
-    private TipoPagoServices service;
+    private TipoPagoServices tipoPagoServices;
 
     @GetMapping
-    public ResponseEntity<List<TipoPago>> listar() {
-        List<TipoPago> lista = service.findAll();
-        if (lista.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> listar() {
+        List<TipoPago> lista = tipoPagoServices.findAll();
+
+        if (lista.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TipoPago> buscar(@PathVariable Integer id) {
-        TipoPago obj = service.findById(id);
-        if (obj != null) return new ResponseEntity<>(obj, HttpStatus.OK);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> buscar(@PathVariable Integer id) {
+        TipoPago tipoPago = tipoPagoServices.findById(id);
+
+        if (tipoPago != null) {
+            return new ResponseEntity<>(tipoPago, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("Tipo de pago no encontrado", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<TipoPago> crear(@Valid @RequestBody TipoPago obj) {
-        return new ResponseEntity<>(service.save(obj), HttpStatus.CREATED);
+    public ResponseEntity<?> crear(@Valid @RequestBody TipoPago tipoPago) {
+        TipoPago nuevoTipoPago = tipoPagoServices.save(tipoPago);
+
+        if (nuevoTipoPago != null) {
+            return new ResponseEntity<>(nuevoTipoPago, HttpStatus.CREATED);
+        }
+
+        return new ResponseEntity<>("No se pudo crear el tipo de pago", HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TipoPago> actualizar(@PathVariable Integer id, @RequestBody TipoPago tipopago) {
-        TipoPago obj = service.findById(id);
-        if (obj == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> actualizar(@PathVariable Integer id, @Valid @RequestBody TipoPago tipoPago) {
+        TipoPago tipoPagoActualizado = tipoPagoServices.actualizarTipoPago(id, tipoPago);
 
-        obj.setIdTipoPago(tipopago.getIdTipoPago());
-        obj.setMetodoPago(tipopago.getMetodoPago());
+        if (tipoPagoActualizado != null) {
+            return new ResponseEntity<>(tipoPagoActualizado, HttpStatus.OK);
+        }
 
-
-        return new ResponseEntity<>(service.save(obj), HttpStatus.OK);
+        return new ResponseEntity<>("Tipo de pago no encontrado", HttpStatus.NOT_FOUND);
     }
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminar(@PathVariable Integer id) {
-        service.delete(id);
-        return new ResponseEntity<>("Eliminado", HttpStatus.OK);
+    public ResponseEntity<?> eliminar(@PathVariable Integer id) {
+        String resultado = tipoPagoServices.delete(id);
+
+        if (resultado.contains("correctamente")) {
+            return new ResponseEntity<>(resultado, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
     }
 }
