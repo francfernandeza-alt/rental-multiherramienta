@@ -1,16 +1,12 @@
 package com.multiherramienta.multiherramienta.Services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.multiherramienta.multiherramienta.DTO.HerramientaDTO;
-import com.multiherramienta.multiherramienta.DTO.ReservaDTO;
 import com.multiherramienta.multiherramienta.Model.Herramienta;
-import com.multiherramienta.multiherramienta.Model.Herramientas;
-import com.multiherramienta.multiherramienta.Model.Reserva;
 import com.multiherramienta.multiherramienta.Repository.HerramientaRepository;
 
 import jakarta.transaction.Transactional;
