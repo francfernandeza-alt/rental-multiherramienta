@@ -17,13 +17,13 @@ public class DireccionService {
 @Autowired
     private DireccionRepository direccionRepository;
 
-    public List<DireccionDTO> findAll() {
+    public List<DireccionDTO> obtenerTodas() {
         return direccionRepository.findAll().stream()
                 .map(this::convertirADTO)
                 .toList();
     }
 
-    public DireccionDTO findById(Integer id) {
+    public DireccionDTO buscarPorId(Integer id) {
         Direccion direccion = direccionRepository.findById(id).orElse(null);
 
         if (direccion != null) {
@@ -33,7 +33,7 @@ public class DireccionService {
         return null;
     }
 
-    public Direccion save(Direccion direccion) {
+    public Direccion guardaDireccion(Direccion direccion) {
         return direccionRepository.save(direccion);
     }
 
@@ -52,7 +52,7 @@ public class DireccionService {
         return null;
     }
 
-    public String delete(Integer id) {
+    public String eliminar(Integer id) {
         Direccion direccion = direccionRepository.findById(id).orElse(null);
 
         if (direccion != null) {
