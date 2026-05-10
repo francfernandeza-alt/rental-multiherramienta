@@ -1,4 +1,5 @@
 package com.multiherramienta.multiherramienta.Controller;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,70 +15,68 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.multiherramienta.multiherramienta.DTO.DireccionDTO;
-import com.multiherramienta.multiherramienta.Model.Direccion;
-import com.multiherramienta.multiherramienta.Services.DireccionService;
+import com.multiherramienta.multiherramienta.Model.Region;
+import com.multiherramienta.multiherramienta.Services.RegionService;
 
 
 @RestController
-@RequestMapping("/api/v1/direccion")
-public class DireccionController {
-    
+@RequestMapping("/api/v1/region")
+public class RegionController {
     @Autowired
-    private DireccionService direccionService;
+    private RegionService regionService;
 
     @GetMapping
-    public ResponseEntity<List<DireccionDTO>> todosLasDirecciones() {
-        List<DireccionDTO> direccion = direccionService.obtenerTodas();
-        if (direccion.isEmpty()) {
+    public ResponseEntity<List<Region>> todosLasRegiones() {
+        List<Region> region = regionService.obtenerTodos();
+        if (region.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(direccion, HttpStatus.OK);
+        return new ResponseEntity<>(region, HttpStatus.OK);
     }
 
-    @GetMapping("/direccion/{id}")
-    public ResponseEntity<DireccionDTO> buscarPorId(@PathVariable Integer id) {
+    @GetMapping("/region/{id}")
+    public ResponseEntity<Region> buscarPorId(@PathVariable Integer id) {
         try {
-            DireccionDTO direccion = direccionService.buscarPorId(id);
-            return new ResponseEntity<>(direccion, HttpStatus.OK);
+            Region region = regionService.buscarporId(id);
+            return new ResponseEntity<>(region, HttpStatus.OK);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<Direccion> agregarDireccion(@RequestBody Direccion direccion) {
+    public ResponseEntity<Region> agregarRegion(@RequestBody Region region) {
         try {
-            Direccion guardada = direccionService.guardaDireccion(direccion);
+            Region guardada = regionService.guardarRegion(region);
             return new ResponseEntity<>(guardada, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PatchMapping("/direccion/{id}")
-    public ResponseEntity<Direccion> editarDireccion(@PathVariable Integer id, @RequestBody Direccion direccion) {
+    @PatchMapping("/region/{id}")
+    public ResponseEntity<Region> editarRegion(@PathVariable Integer id, @RequestBody Region region) {
         try {
-            Direccion editada = direccionService.guardaDireccion(direccion);
+            Region editada = regionService.guardarRegion(region);
             return new ResponseEntity<>(editada, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PutMapping("/direccion/{id}")
-    public ResponseEntity<Direccion> actualizarDireccion(@PathVariable Integer id, @RequestBody Direccion direccion){
+    @PutMapping("/region/{id}")
+    public ResponseEntity<Region> actualizarRegion(@PathVariable Integer id, @RequestBody Region region){
         try{
-            Direccion nuevaDireccion = direccionService.actualizarDireccion(id, direccion);
-            return new ResponseEntity<>(nuevaDireccion, HttpStatus.OK);
+            Region nuevo = regionService.actualizarRegion(id, region);
+            return new ResponseEntity<>(nuevo, HttpStatus.OK);
         }catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @DeleteMapping("/direccion/{id}")
-    public ResponseEntity<String> eliminarDireccion(@PathVariable Integer id) {
-        String resultado = direccionService.eliminar(id);
+    @DeleteMapping("/region/{id}")
+    public ResponseEntity<String> eliminarRegion(@PathVariable Integer id) {
+        String resultado = regionService.eliminar(id);
         if (resultado.contains("eliminada")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
         } else {
@@ -85,3 +84,5 @@ public class DireccionController {
         }
     }
 }
+
+
