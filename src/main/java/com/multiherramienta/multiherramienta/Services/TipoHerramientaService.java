@@ -17,15 +17,15 @@ public class TipoHerramientaService {
     @Autowired
     private TipoHerramientaRepository tipoHerramientaRepository;
 
-    public List<TipoHerramienta> findAll() {
+    public List<TipoHerramienta> obtenerTodos() {
         return tipoHerramientaRepository.findAll();
     }
 
-    public TipoHerramienta findById(Integer id) {
+    public TipoHerramienta buscarPorId(Integer id) {
         return tipoHerramientaRepository.findById(id).orElse(null);
     }
 
-    public TipoHerramienta save(TipoHerramienta tipoHerramienta) {
+    public TipoHerramienta guardarTipoHerramienta(TipoHerramienta tipoHerramienta) {
         return tipoHerramientaRepository.save(tipoHerramienta);
     }
 
@@ -41,7 +41,7 @@ public class TipoHerramientaService {
         return null;
     }
 
-    public String delete(Integer id) {
+    public String eliminarTipoHerramienta(Integer id) {
         TipoHerramienta tipoHerramienta = tipoHerramientaRepository.findById(id).orElse(null);
 
         if (tipoHerramienta != null) {
