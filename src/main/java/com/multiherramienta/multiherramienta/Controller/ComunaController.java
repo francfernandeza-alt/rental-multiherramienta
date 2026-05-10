@@ -15,12 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.multiherramienta.multiherramienta.DTO.MarcaDTO;
 import com.multiherramienta.multiherramienta.Model.Comuna;
-import com.multiherramienta.multiherramienta.Model.Marca;
 import com.multiherramienta.multiherramienta.Services.ComunaService;
 
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/comunas")
