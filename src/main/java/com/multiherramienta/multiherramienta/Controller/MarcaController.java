@@ -20,7 +20,7 @@ import com.multiherramienta.multiherramienta.Model.Marca;
 import com.multiherramienta.multiherramienta.Services.MarcaService;
 
 @RestController
-@RequestMapping("/api/v1/marcas")
+@RequestMapping("/api/v1/marca")
 public class MarcaController {
 @Autowired
     private MarcaService marcaService;
@@ -34,7 +34,7 @@ public class MarcaController {
         return new ResponseEntity<>(marca, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/marca/{id}")
     public ResponseEntity<MarcaDTO> buscarPorId(@PathVariable Integer id) {
         try {
             MarcaDTO mar = marcaService.buscarporId(id);
@@ -54,7 +54,7 @@ public class MarcaController {
         }
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/marca/{id}")
     public ResponseEntity<Marca> editarUsuario(@PathVariable Integer id, @RequestBody Marca marca) {
         try {
             Marca editada = marcaService.guardarMarca(marca);
@@ -64,7 +64,7 @@ public class MarcaController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/marca/{id}")
     public ResponseEntity<Marca> actualizarMarca(@PathVariable Integer id, @RequestBody Marca marca){
         try{
             Marca nuevaMarca = marcaService.actualizarMarca(id, marca);
@@ -74,7 +74,7 @@ public class MarcaController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/marca/{id}")
     public ResponseEntity<String> eliminarMarca(@PathVariable Integer id) {
         String resultado = marcaService.eliminar(id);
         if (resultado.contains("eliminada")) {
