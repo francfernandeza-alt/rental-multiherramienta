@@ -31,7 +31,7 @@ public class MantencionController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/mantencion/{id}")
     public ResponseEntity<Mantencion> buscar(@PathVariable Integer id) {
         Mantencion obj = mantencionService.findById(id);
         if (obj != null) return new ResponseEntity<>(obj, HttpStatus.OK);
@@ -43,7 +43,7 @@ public class MantencionController {
         return new ResponseEntity<>(mantencionService.save(mantencion), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/mantencion/{id}")
     public ResponseEntity<Mantencion> actualizar(@PathVariable Integer id, @RequestBody Mantencion data) {
         Mantencion obj = mantencionService.findById(id);
         if (obj == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -56,7 +56,7 @@ public class MantencionController {
         return new ResponseEntity<>(mantencionService.save(obj), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/mantencion/{id}")
     public ResponseEntity<String> eliminar(@PathVariable Integer id) {
         Mantencion obj = mantencionService.findById(id);
         if (obj == null) return new ResponseEntity<>("No encontrado", HttpStatus.NOT_FOUND);
