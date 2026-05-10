@@ -17,15 +17,15 @@ public class MaterialService {
     @Autowired
     private MaterialRepository materialRepository;
 
-    public List<Material> findAll() {
+    public List<Material> obtenerTodos() {
         return materialRepository.findAll();
     }
 
-    public Material findById(Integer id) {
+    public Material buscarPorId(Integer id) {
         return materialRepository.findById(id).orElse(null);
     }
 
-    public Material save(Material material) {
+    public Material guardarMaterial(Material material) {
         return materialRepository.save(material);
     }
 
@@ -41,7 +41,7 @@ public class MaterialService {
         return null;
     }
 
-    public String delete(Integer id) {
+    public String eliminar(Integer id) {
         Material material = materialRepository.findById(id).orElse(null);
 
         if (material != null) {

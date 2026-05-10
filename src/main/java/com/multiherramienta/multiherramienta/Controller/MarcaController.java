@@ -22,7 +22,7 @@ import com.multiherramienta.multiherramienta.Services.MarcaService;
 @RestController
 @RequestMapping("/api/v1/marca")
 public class MarcaController {
-@Autowired
+    @Autowired
     private MarcaService marcaService;
 
     @GetMapping

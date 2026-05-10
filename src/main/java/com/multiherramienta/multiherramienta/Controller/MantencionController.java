@@ -21,7 +21,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/v1/mantencion")
 public class MantencionController {
-@Autowired
+    @Autowired
     private MantencionServices mantencionService;
 
     @GetMapping

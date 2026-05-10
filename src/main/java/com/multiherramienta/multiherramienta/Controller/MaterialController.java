@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,67 +18,69 @@ import org.springframework.web.bind.annotation.RestController;
 import com.multiherramienta.multiherramienta.Model.Material;
 import com.multiherramienta.multiherramienta.Services.MaterialService;
 
-import jakarta.validation.Valid;
-
 @RestController
-@RequestMapping("/api/v1/materiales")
+@RequestMapping("/api/v1/material")
 public class MaterialController {
 
     @Autowired
     private MaterialService materialService;
 
     @GetMapping
-    public ResponseEntity<?> listarMateriales() {
-        List<Material> materiales = materialService.findAll();
-
-        if (materiales.isEmpty()) {
+    public ResponseEntity<List<Material>> todosLosMateriales() {
+        List<Material> material = materialService.obtenerTodos();
+        if (material.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
-        return new ResponseEntity<>(materiales, HttpStatus.OK);
+        return new ResponseEntity<>(material, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> buscarMaterial(@PathVariable Integer id) {
-        Material material = materialService.findById(id);
-
-        if (material != null) {
+    @GetMapping("/material/{id}")
+    public ResponseEntity<Material> buscarPorId(@PathVariable Integer id) {
+        try {
+            Material material = materialService.buscarPorId(id);
             return new ResponseEntity<>(material, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
-
-        return new ResponseEntity<>("Material no encontrado", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<?> crearMaterial(@Valid @RequestBody Material material) {
-        Material nuevoMaterial = materialService.save(material);
-
-        if (nuevoMaterial != null) {
-            return new ResponseEntity<>(nuevoMaterial, HttpStatus.CREATED);
+    public ResponseEntity<Material> agregarmaterial(@RequestBody Material material) {
+        try {
+            Material guardada = materialService.guardarMaterial(material);
+            return new ResponseEntity<>(guardada, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity<>("No se pudo crear el material", HttpStatus.BAD_REQUEST);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarMaterial(@PathVariable Integer id, @Valid @RequestBody Material material) {
-        Material materialActualizado = materialService.actualizarMaterial(id, material);
-
-        if (materialActualizado != null) {
-            return new ResponseEntity<>(materialActualizado, HttpStatus.OK);
+    @PatchMapping("/material/{id}")
+    public ResponseEntity<Material> editarMaterial(@PathVariable Integer id, @RequestBody Material material) {
+        try {
+            Material editada = materialService.guardarMaterial(material);
+            return new ResponseEntity<>(editada, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>("Material no encontrado", HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarMaterial(@PathVariable Integer id) {
-        String resultado = materialService.delete(id);
+    @PutMapping("/material/{id}")
+    public ResponseEntity<Material> actualizarMaterial(@PathVariable Integer id, @RequestBody Material material){
+        try{
+            Material nuevoMaterial = materialService.actualizarMaterial(id, material);
+            return new ResponseEntity<>(nuevoMaterial, HttpStatus.OK);
+        }catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
-        if (resultado.contains("correctamente")) {
+    @DeleteMapping("/material/{id}")
+    public ResponseEntity<String> eliminarMaterial(@PathVariable Integer id) {
+        String resultado = materialService.eliminar(id);
+        if (resultado.contains("eliminado")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
     }
 }
