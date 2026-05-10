@@ -17,15 +17,15 @@ public class TipoPagoServices {
     @Autowired
     private TipoPagoRepository tipoPagoRepository;
 
-    public List<TipoPago> findAll() {
+    public List<TipoPago> obtenerTodos() {
         return tipoPagoRepository.findAll();
     }
 
-    public TipoPago findById(Integer id) {
+    public TipoPago buscarPorId(Integer id) {
         return tipoPagoRepository.findById(id).orElse(null);
     }
 
-    public TipoPago save(TipoPago tipoPago) {
+    public TipoPago guardarTipoPago(TipoPago tipoPago) {
         return tipoPagoRepository.save(tipoPago);
     }
 
@@ -40,7 +40,7 @@ public class TipoPagoServices {
         return null;
     }
 
-    public String delete(Integer id) {
+    public String eliminar(Integer id) {
         TipoPago tipoPago = tipoPagoRepository.findById(id).orElse(null);
 
         if (tipoPago != null) {
