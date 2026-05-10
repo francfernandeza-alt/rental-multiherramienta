@@ -17,15 +17,15 @@ public class TipoReservaService {
     @Autowired
     private TipoReservaRepository tipoReservaRepository;
 
-    public List<TipoReserva> findAll() {
+    public List<TipoReserva> obtenerTodos() {
         return tipoReservaRepository.findAll();
     }
 
-    public TipoReserva findById(Integer id) {
+    public TipoReserva buscarPorId(Integer id) {
         return tipoReservaRepository.findById(id).orElse(null);
     }
 
-    public TipoReserva save(TipoReserva tipoReserva) {
+    public TipoReserva guardarTipoReserva(TipoReserva tipoReserva) {
         return tipoReservaRepository.save(tipoReserva);
     }
 
@@ -40,7 +40,7 @@ public class TipoReservaService {
         return null;
     }
 
-    public String delete(Integer id) {
+    public String eliminar(Integer id) {
         TipoReserva tipoReserva = tipoReservaRepository.findById(id).orElse(null);
 
         if (tipoReserva != null) {
