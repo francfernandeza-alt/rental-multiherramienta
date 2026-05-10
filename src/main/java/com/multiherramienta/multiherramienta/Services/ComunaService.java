@@ -17,19 +17,19 @@ public class ComunaService {
     @Autowired
     private ComunaRepository comunaRepository;
 
-    public List<Comuna> findAll() {
+    public List<Comuna> obtenerTodas() {
         return comunaRepository.findAll();
     }
 
-    public Comuna findById(Integer id) {
+    public Comuna buscarPorId(Integer id) {
         return comunaRepository.findById(id).orElse(null);
     }
 
-    public Comuna save(Comuna comuna) {
+    public Comuna guardarComuna(Comuna comuna) {
         return comunaRepository.save(comuna);
     }
 
-    public String delete(Integer id) {
+    public String eliminar(Integer id) {
         Comuna comuna = comunaRepository.findById(id).orElse(null);
 
         if (comuna != null) {
