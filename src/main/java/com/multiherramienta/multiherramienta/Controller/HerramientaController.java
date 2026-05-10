@@ -33,7 +33,7 @@ public class HerramientaController {
         return new ResponseEntity<>(herramienta, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/herramientas/{id}")
     public ResponseEntity<HerramientaDTO> buscarPorId(@PathVariable Integer id) {
         try {
             HerramientaDTO her = herramientaService.buscarPorId(id);
@@ -53,7 +53,7 @@ public class HerramientaController {
         }
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/herramientas/{id}")
     public ResponseEntity<Herramienta> editarHerramienta(@PathVariable Integer id, @RequestBody Herramienta herramienta) {
         try {
             Herramienta editada = herramientaService.guardarHerramienta(herramienta);
@@ -63,7 +63,7 @@ public class HerramientaController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/herramientas/{id}")
     public ResponseEntity<Herramienta> actualizarHerramienta(@PathVariable Integer id, @RequestBody Herramienta herramienta){
         try{
             Herramienta newTool = herramientaService.actualizarHerramienta(id, herramienta);
@@ -73,7 +73,7 @@ public class HerramientaController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/herramientas/{id}")
     public ResponseEntity<String> eliminarHerramienta(@PathVariable Integer id) {
         String resultado = herramientaService.eliminar(id);
         if (resultado.contains("eliminada")) {
