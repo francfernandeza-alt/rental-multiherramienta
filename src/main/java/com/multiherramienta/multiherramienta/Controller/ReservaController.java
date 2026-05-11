@@ -74,7 +74,7 @@ public class ReservaController {
         }
     }
 
-    @DeleteMapping("/reserva/{id}")
+    @DeleteMapping("/reservas/{id}")
     public ResponseEntity<String> eliminarReserva(@PathVariable Integer numReserva) {
         String resultado = reservaService.eliminar(numReserva);
         if (resultado.contains("eliminada")) {
