@@ -34,7 +34,7 @@ public class UsuarioController {
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
-    @GetMapping("/{rut}")
+    @GetMapping("usuarios/{rut}")
     public ResponseEntity<UsuarioDTO> buscarPorRut(@PathVariable String rut) {
         try {
             UsuarioDTO us = usuarioService.buscarporId(rut);
@@ -54,7 +54,7 @@ public class UsuarioController {
         }
     }
 
-    @PatchMapping("/{rut}")
+    @PatchMapping("usuarios/{rut}")
     public ResponseEntity<Usuario> editarUsuario(@PathVariable String rut, @RequestBody Usuario usuario) {
         try {
             Usuario editado = usuarioService.guardarUsuario(usuario);
@@ -64,7 +64,7 @@ public class UsuarioController {
         }
     }
 
-    @PutMapping("/{rut}")
+    @PutMapping("usuarios/{rut}")
     public ResponseEntity<Usuario> actualizarUsuario(@PathVariable String rut, @RequestBody Usuario usuario){
         try{
             Usuario newUser = usuarioService.actualizarUsuario( rut, usuario);
@@ -74,7 +74,7 @@ public class UsuarioController {
         }
     }
 
-    @DeleteMapping("/{rut}")
+    @DeleteMapping("usuarios/{rut}")
     public ResponseEntity<String> eliminarUsuario(@PathVariable String rut) {
         String resultado = usuarioService.eliminar(rut);
         if (resultado.contains("eliminado")) {
