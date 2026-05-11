@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.multiherramienta.multiherramienta.Model.TipoReserva;
 import com.multiherramienta.multiherramienta.Services.TipoReservaService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/tiporeserva")
 public class TipoReservaController {
@@ -26,36 +28,37 @@ public class TipoReservaController {
     private TipoReservaService tipoReservaService;
 
     @GetMapping
-    public ResponseEntity<List<TipoReserva>> todosLasReservas() {
-        List<TipoReserva> tipoReserva = tipoReservaService.obtenerTodos();
-        if (tipoReserva.isEmpty()) {
+    public ResponseEntity<?> listar() {
+        List<TipoReserva> lista = tipoReservaService.obtenerTodos();
+
+        if (lista.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(tipoReserva, HttpStatus.OK);
+        return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
     @GetMapping("/tiporeserva/{id}")
-    public ResponseEntity<TipoReserva> buscarPorId(@PathVariable Integer id) {
-        try {
-            TipoReserva tipoReserva = tipoReservaService.buscarPorId(id);
+    public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
+        TipoReserva tipoReserva = tipoReservaService.buscarPorId(id);
+
+        if(tipoReserva != null){
             return new ResponseEntity<>(tipoReserva, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
         }
+        return new ResponseEntity<>("Tipo de reserva no encontrado", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<TipoReserva> agregarTipoReserva(@RequestBody TipoReserva tipoReserva) {
-        try {
-            TipoReserva guardada = tipoReservaService.guardarTipoReserva(tipoReserva);
-            return new ResponseEntity<>(guardada, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> agregarTipoReserva(@RequestBody TipoReserva tipoReserva) {
+        TipoReserva nuevaTipoReserva = tipoReservaService.guardarTipoReserva(tipoReserva);
+
+        if(nuevaTipoReserva != null){
+            return new ResponseEntity<>(nuevaTipoReserva, HttpStatus.CREATED);
         }
+        return new ResponseEntity<>("No se pudo crear el tipo de reserva", HttpStatus.BAD_REQUEST);
     }
 
     @PatchMapping("/tiporeserva/{id}")
-    public ResponseEntity<TipoReserva> editarTipoReserva(@PathVariable Integer id, @RequestBody TipoReserva tipoReserva) {
+    public ResponseEntity<?> editarTipoReserva(@PathVariable Integer id, @RequestBody TipoReserva tipoReserva) {
         try {
             TipoReserva editada = tipoReservaService.guardarTipoReserva(tipoReserva);
             return new ResponseEntity<>(editada, HttpStatus.OK);
@@ -65,22 +68,22 @@ public class TipoReservaController {
     }
 
     @PutMapping("/tiporeserva/{id}")
-    public ResponseEntity<TipoReserva> actualizarTipoReserva(@PathVariable Integer id, @RequestBody TipoReserva tipoReserva){
-        try{
-            TipoReserva nuevo = tipoReservaService.actualizarTipoReserva(id, tipoReserva);
-            return new ResponseEntity<>(nuevo, HttpStatus.OK);
-        }catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> actualizar(@PathVariable Integer id, @Valid @RequestBody TipoReserva tipoReserva) {
+        TipoReserva tipoReservaActualizado = tipoReservaService.actualizarTipoReserva(id, tipoReserva);
+
+        if (tipoReservaActualizado != null) {
+            return new ResponseEntity<>(tipoReservaActualizado, HttpStatus.OK);
         }
+        return new ResponseEntity<>("Tipo de reserva no encontrado", HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/tiporeserva/{id}")
-    public ResponseEntity<String> eliminarMarca(@PathVariable Integer id) {
+    public ResponseEntity<?> eliminar(@PathVariable Integer id) {
         String resultado = tipoReservaService.eliminar(id);
-        if (resultado.contains("eliminado")) {
+
+        if (resultado.contains("correctamente")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
     }
 }
