@@ -19,13 +19,13 @@ import com.multiherramienta.multiherramienta.DTO.HerramientaDTO;
 import com.multiherramienta.multiherramienta.Model.Herramienta;
 import com.multiherramienta.multiherramienta.Services.HerramientaService;
 @RestController
-@RequestMapping("/api/v1/herramientas")
+@RequestMapping("/api/v1/herramienta")
 public class HerramientaController {
     @Autowired
     private HerramientaService herramientaService;
     
     @GetMapping
-    public ResponseEntity<List<HerramientaDTO>> todosLasHerramientas() {
+    public ResponseEntity<?> todosLasHerramientas() {
         List<HerramientaDTO> herramienta = herramientaService.obtenerTodos();
         if (herramienta.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -33,8 +33,8 @@ public class HerramientaController {
         return new ResponseEntity<>(herramienta, HttpStatus.OK);
     }
 
-    @GetMapping("/herramientas/{id}")
-    public ResponseEntity<HerramientaDTO> buscarPorId(@PathVariable Integer id) {
+    @GetMapping("/herramienta/{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
         try {
             HerramientaDTO her = herramientaService.buscarPorId(id);
             return new ResponseEntity<>(her, HttpStatus.OK);
@@ -44,7 +44,7 @@ public class HerramientaController {
     }
 
     @PostMapping
-    public ResponseEntity<Herramienta> agregarherramienta(@RequestBody Herramienta herramienta) {
+    public ResponseEntity<?> agregarherramienta(@RequestBody Herramienta herramienta) {
         try {
             Herramienta guardada = herramientaService.guardarHerramienta(herramienta);
             return new ResponseEntity<>(guardada, HttpStatus.CREATED);
@@ -53,8 +53,8 @@ public class HerramientaController {
         }
     }
 
-    @PatchMapping("/herramientas/{id}")
-    public ResponseEntity<Herramienta> editarHerramienta(@PathVariable Integer id, @RequestBody Herramienta herramienta) {
+    @PatchMapping("/herramienta/{id}")
+    public ResponseEntity<?> editarHerramienta(@PathVariable Integer id, @RequestBody Herramienta herramienta) {
         try {
             Herramienta editada = herramientaService.guardarHerramienta(herramienta);
             return new ResponseEntity<>(editada, HttpStatus.OK);
@@ -63,8 +63,8 @@ public class HerramientaController {
         }
     }
 
-    @PutMapping("/herramientas/{id}")
-    public ResponseEntity<Herramienta> actualizarHerramienta(@PathVariable Integer id, @RequestBody Herramienta herramienta){
+    @PutMapping("/herramienta/{id}")
+    public ResponseEntity<?> actualizarHerramienta(@PathVariable Integer id, @RequestBody Herramienta herramienta){
         try{
             Herramienta newTool = herramientaService.actualizarHerramienta(id, herramienta);
             return new ResponseEntity<>(newTool, HttpStatus.OK);
@@ -73,8 +73,8 @@ public class HerramientaController {
         }
     }
 
-    @DeleteMapping("/herramientas/{id}")
-    public ResponseEntity<String> eliminarHerramienta(@PathVariable Integer id) {
+    @DeleteMapping("/herramienta/{id}")
+    public ResponseEntity<?> eliminarHerramienta(@PathVariable Integer id) {
         String resultado = herramientaService.eliminar(id);
         if (resultado.contains("eliminada")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
