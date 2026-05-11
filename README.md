@@ -37,3 +37,4 @@ Crear una base de datos en MySQL:
 
 ```sql
 CREATE DATABASE db_rental_herramientas;
+```
