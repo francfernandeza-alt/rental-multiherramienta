@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.multiherramienta.multiherramienta.Model.TipoPago;
 import com.multiherramienta.multiherramienta.Services.TipoPagoServices;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/v1/tipopago")
@@ -27,36 +29,38 @@ public class TipoPagoController {
     private TipoPagoServices tipoPagoServices;
 
     @GetMapping
-    public ResponseEntity<List<TipoPago>> todooLosTipoPago() {
-        List<TipoPago> tipoPago = tipoPagoServices.obtenerTodos();
-        if (tipoPago.isEmpty()) {
+    public ResponseEntity<?> listar() {
+        List<TipoPago> lista = tipoPagoServices.obtenerTodos();
+
+        if (lista.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(tipoPago, HttpStatus.OK);
+
+        return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
     @GetMapping("/tipopago/{id}")
-    public ResponseEntity<TipoPago> buscarPorId(@PathVariable Integer id) {
-        try {
-            TipoPago tipoPago = tipoPagoServices.buscarPorId(id);
+    public ResponseEntity<?> buscar(@PathVariable Integer id) {
+        TipoPago tipoPago = tipoPagoServices.buscarPorId(id);
+
+        if (tipoPago != null) {
             return new ResponseEntity<>(tipoPago, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
         }
+        return new ResponseEntity<>("Tipo de pago no encontrado", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<TipoPago> agregarTipoPago(@RequestBody TipoPago tipoPago) {
-        try {
-            TipoPago guardado = tipoPagoServices.guardarTipoPago(tipoPago);
-            return new ResponseEntity<>(guardado, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> crear(@Valid @RequestBody TipoPago tipoPago) {
+        TipoPago nuevoTipoPago = tipoPagoServices.guardarTipoPago(tipoPago);
+
+        if (nuevoTipoPago != null) {
+            return new ResponseEntity<>(nuevoTipoPago, HttpStatus.CREATED);
         }
+        return new ResponseEntity<>("No se pudo crear el tipo de pago", HttpStatus.BAD_REQUEST);
     }
 
     @PatchMapping("/tipopago/{id}")
-    public ResponseEntity<TipoPago> editarUsuario(@PathVariable Integer id, @RequestBody TipoPago tipoPago) {
+    public ResponseEntity<?> editarUsuario(@PathVariable Integer id, @RequestBody TipoPago tipoPago) {
         try {
             TipoPago editada = tipoPagoServices.guardarTipoPago(tipoPago);
             return new ResponseEntity<>(editada, HttpStatus.OK);
@@ -66,22 +70,22 @@ public class TipoPagoController {
     }
 
     @PutMapping("/tipopago/{id}")
-    public ResponseEntity<TipoPago> actualizarTipoPago(@PathVariable Integer id, @RequestBody TipoPago tipoPago){
-        try{
-            TipoPago nuevo = tipoPagoServices.actualizarTipoPago(id, tipoPago);
-            return new ResponseEntity<>(nuevo, HttpStatus.OK);
-        }catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> actualizar(@PathVariable Integer id, @Valid @RequestBody TipoPago tipoPago) {
+        TipoPago tipoPagoActualizado = tipoPagoServices.actualizarTipoPago(id, tipoPago);
+
+        if (tipoPagoActualizado != null) {
+            return new ResponseEntity<>(tipoPagoActualizado, HttpStatus.OK);
         }
+        return new ResponseEntity<>("Tipo de pago no encontrado", HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/tipopago/{id}")
-    public ResponseEntity<String> eliminarTipoPago(@PathVariable Integer id) {
+    public ResponseEntity<?> eliminar(@PathVariable Integer id) {
         String resultado = tipoPagoServices.eliminar(id);
-        if (resultado.contains("eliminado")) {
+
+        if (resultado.contains("correctamente")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
     }
 }
