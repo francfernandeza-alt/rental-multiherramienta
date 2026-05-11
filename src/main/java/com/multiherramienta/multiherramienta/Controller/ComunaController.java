@@ -55,7 +55,7 @@ public class ComunaController {
         }
     }
 
-    @PatchMapping("/communas/{id}")
+    @PatchMapping("/comunas/{id}")
     public ResponseEntity<Comuna> editarComuna(@PathVariable Integer id, @RequestBody Comuna comuna) {
         try {
             Comuna editada = comunaService.guardarComuna(comuna);
