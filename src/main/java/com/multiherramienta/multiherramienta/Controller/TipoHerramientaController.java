@@ -35,7 +35,7 @@ public class TipoHerramientaController {
         return new ResponseEntity<>(tipoHerramienta, HttpStatus.OK);
     }
 
-    @GetMapping("/tipoherramienta/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<TipoHerramienta> buscarPorId(@PathVariable Integer id) {
         try {
             TipoHerramienta tipoHerramienta = tipoHerramientaService.buscarPorId(id);
@@ -55,7 +55,7 @@ public class TipoHerramientaController {
         }
     }
 
-    @PatchMapping("/tipoherramienta/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<TipoHerramienta> editarTipoHerramienta(@PathVariable Integer id, @RequestBody TipoHerramienta tipoHerramienta) {
         try {
             TipoHerramienta editada = tipoHerramientaService.guardarTipoHerramienta(tipoHerramienta);
@@ -65,7 +65,7 @@ public class TipoHerramientaController {
         }
     }
 
-    @PutMapping("/tipoherramienta/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<TipoHerramienta> actualizarTipoHerramienta(@PathVariable Integer id, @RequestBody TipoHerramienta tipoHerramienta){
         try{
             TipoHerramienta nuevoTipoHerramienta = tipoHerramientaService.actualizarTipoHerramienta(id, tipoHerramienta);
@@ -75,7 +75,7 @@ public class TipoHerramientaController {
         }
     }
 
-    @DeleteMapping("/tipoherramienta/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarTipoHerramienta(@PathVariable Integer id) {
         String resultado = tipoHerramientaService.eliminarTipoHerramienta(id);
         if (resultado.contains("eliminado")) {

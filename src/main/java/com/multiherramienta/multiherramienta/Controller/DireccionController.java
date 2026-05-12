@@ -35,7 +35,7 @@ public class DireccionController {
         return new ResponseEntity<>(direccion, HttpStatus.OK);
     }
 
-    @GetMapping("/direccion/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<DireccionDTO> buscarPorId(@PathVariable Integer id) {
         try {
             DireccionDTO direccion = direccionService.buscarPorId(id);
@@ -55,7 +55,7 @@ public class DireccionController {
         }
     }
 
-    @PatchMapping("/direccion/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Direccion> editarDireccion(@PathVariable Integer id, @RequestBody Direccion direccion) {
         try {
             Direccion editada = direccionService.guardaDireccion(direccion);
@@ -65,7 +65,7 @@ public class DireccionController {
         }
     }
 
-    @PutMapping("/direccion/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Direccion> actualizarDireccion(@PathVariable Integer id, @RequestBody Direccion direccion){
         try{
             Direccion nuevaDireccion = direccionService.actualizarDireccion(id, direccion);
@@ -75,7 +75,7 @@ public class DireccionController {
         }
     }
 
-    @DeleteMapping("/direccion/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarDireccion(@PathVariable Integer id) {
         String resultado = direccionService.eliminar(id);
         if (resultado.contains("eliminada")) {

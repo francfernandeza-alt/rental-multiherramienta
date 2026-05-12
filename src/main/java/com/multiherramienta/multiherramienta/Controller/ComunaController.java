@@ -55,7 +55,7 @@ public class ComunaController {
         }
     }
 
-    @PatchMapping("/comunas/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Comuna> editarComuna(@PathVariable Integer id, @RequestBody Comuna comuna) {
         try {
             Comuna editada = comunaService.guardarComuna(comuna);
@@ -65,7 +65,7 @@ public class ComunaController {
         }
     }
 
-    @PutMapping("/comunas/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Comuna> actualizarComuna(@PathVariable Integer id, @RequestBody Comuna comuna){
         try{
             Comuna nuevaComuna = comunaService.actualizarComuna(id, comuna);
@@ -75,7 +75,7 @@ public class ComunaController {
         }
     }
 
-    @DeleteMapping("/comunas/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarComuna(@PathVariable Integer id) {
         String resultado = comunaService.eliminar(id);
         if (resultado.contains("eliminada")) {

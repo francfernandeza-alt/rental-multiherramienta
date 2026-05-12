@@ -39,7 +39,7 @@ public class TipoPagoController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
-    @GetMapping("/tipopago/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> buscar(@PathVariable Integer id) {
         TipoPago tipoPago = tipoPagoServices.buscarPorId(id);
 
@@ -59,7 +59,7 @@ public class TipoPagoController {
         return new ResponseEntity<>("No se pudo crear el tipo de pago", HttpStatus.BAD_REQUEST);
     }
 
-    @PatchMapping("/tipopago/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> editarUsuario(@PathVariable Integer id, @RequestBody TipoPago tipoPago) {
         try {
             TipoPago editada = tipoPagoServices.guardarTipoPago(tipoPago);
@@ -69,7 +69,7 @@ public class TipoPagoController {
         }
     }
 
-    @PutMapping("/tipopago/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> actualizar(@PathVariable Integer id, @Valid @RequestBody TipoPago tipoPago) {
         TipoPago tipoPagoActualizado = tipoPagoServices.actualizarTipoPago(id, tipoPago);
 
@@ -79,7 +79,7 @@ public class TipoPagoController {
         return new ResponseEntity<>("Tipo de pago no encontrado", HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/tipopago/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Integer id) {
         String resultado = tipoPagoServices.eliminar(id);
 
