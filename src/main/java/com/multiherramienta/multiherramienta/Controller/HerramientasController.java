@@ -17,8 +17,9 @@ import com.multiherramienta.multiherramienta.Model.Herramientas;
 import com.multiherramienta.multiherramienta.Services.HerramientasService;
 
 @RestController
-@RequestMapping("/api/v1/reseñas")
+@RequestMapping("/api/v1/reseña")
 public class HerramientasController {
+
     @Autowired
     private HerramientasService herramientasService;
 
@@ -31,8 +32,8 @@ public class HerramientasController {
         return new ResponseEntity<>(reseña, HttpStatus.OK);
     }
 
-    @GetMapping("/reseñas/{id}")
-    public ResponseEntity<Herramientas> buscarPorId(@PathVariable Integer id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Herramientas> buscarporId(@PathVariable Integer id) {
         try {
             Herramientas her = herramientasService.buscarPorId(id);
             return new ResponseEntity<>(her, HttpStatus.OK);
@@ -44,14 +45,14 @@ public class HerramientasController {
     @PostMapping
     public ResponseEntity<Herramientas> agregarReseña(@RequestBody Herramientas reseña) {
         try {
-            Herramientas guardada = herramientasService.guardar(reseña);
-            return new ResponseEntity<>(guardada, HttpStatus.CREATED);
+            Herramientas guardado = herramientasService.guardar(reseña);
+            return new ResponseEntity<>(guardado, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @DeleteMapping("/reseñas/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarReseña(@PathVariable Integer id) {
         String resultado = herramientasService.eliminar(id);
         if (resultado.contains("eliminada")) {
@@ -61,12 +62,13 @@ public class HerramientasController {
         }
     }
 
-    @GetMapping("/reseñas/usuario/{rutUsuario}")
-    public ResponseEntity<List<String>> reseñasPorRutUsuario(@PathVariable String rutUsuario) {
-        List<String> reseñas = herramientasService.reseñasPorRutUsuario(rutUsuario);
+    @GetMapping("/reseñas/{rutUsuario}")
+    public ResponseEntity<List<String>> reseñasPorUsuario(@PathVariable String rutUsuario) {
+        List<String> reseñas = herramientasService.reseñaPorRutUsuario(rutUsuario);
+
         if (reseñas.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return ResponseEntity.ok(reseñas);
+        return new ResponseEntity<>(reseñas, HttpStatus.OK);
     }
 }

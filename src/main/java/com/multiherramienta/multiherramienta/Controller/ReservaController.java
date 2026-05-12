@@ -34,7 +34,7 @@ public class ReservaController {
         return new ResponseEntity<>(reserva, HttpStatus.OK);
     }
 
-    @GetMapping("/reservas/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ReservaDTO> buscarPorId(@PathVariable Integer numReserva) {
         try {
             ReservaDTO res = reservaService.buscarpornumReserva(numReserva);
@@ -54,7 +54,7 @@ public class ReservaController {
         }
     }
 
-    @PatchMapping("/reservas/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Reserva> editarReserva(@PathVariable Integer numReserva, @RequestBody Reserva reserva) {
         try {
             Reserva editada = reservaService.guardarReserva(reserva);
@@ -64,7 +64,7 @@ public class ReservaController {
         }
     }
 
-    @PutMapping("/reservas/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Reserva> actualizarReserva(@PathVariable Integer numReserva, @RequestBody Reserva reserva){
         try{
             Reserva nuevaReserva = reservaService.actualizarReserva(numReserva, reserva);
@@ -74,7 +74,7 @@ public class ReservaController {
         }
     }
 
-    @DeleteMapping("/reserva/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarReserva(@PathVariable Integer numReserva) {
         String resultado = reservaService.eliminar(numReserva);
         if (resultado.contains("eliminada")) {

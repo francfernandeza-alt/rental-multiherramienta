@@ -34,7 +34,7 @@ public class RegionController {
         return new ResponseEntity<>(region, HttpStatus.OK);
     }
 
-    @GetMapping("/region/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Region> buscarPorId(@PathVariable Integer id) {
         try {
             Region region = regionService.buscarporId(id);
@@ -54,7 +54,7 @@ public class RegionController {
         }
     }
 
-    @PatchMapping("/region/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Region> editarRegion(@PathVariable Integer id, @RequestBody Region region) {
         try {
             Region editada = regionService.guardarRegion(region);
@@ -64,7 +64,7 @@ public class RegionController {
         }
     }
 
-    @PutMapping("/region/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Region> actualizarRegion(@PathVariable Integer id, @RequestBody Region region){
         try{
             Region nuevo = regionService.actualizarRegion(id, region);
@@ -74,7 +74,7 @@ public class RegionController {
         }
     }
 
-    @DeleteMapping("/region/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarRegion(@PathVariable Integer id) {
         String resultado = regionService.eliminar(id);
         if (resultado.contains("eliminada")) {

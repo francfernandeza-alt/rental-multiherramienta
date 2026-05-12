@@ -37,7 +37,7 @@ public class TipoReservaController {
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
-    @GetMapping("/tiporeserva/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
         TipoReserva tipoReserva = tipoReservaService.buscarPorId(id);
 
@@ -57,7 +57,7 @@ public class TipoReservaController {
         return new ResponseEntity<>("No se pudo crear el tipo de reserva", HttpStatus.BAD_REQUEST);
     }
 
-    @PatchMapping("/tiporeserva/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> editarTipoReserva(@PathVariable Integer id, @RequestBody TipoReserva tipoReserva) {
         try {
             TipoReserva editada = tipoReservaService.guardarTipoReserva(tipoReserva);
@@ -67,7 +67,7 @@ public class TipoReservaController {
         }
     }
 
-    @PutMapping("/tiporeserva/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> actualizar(@PathVariable Integer id, @Valid @RequestBody TipoReserva tipoReserva) {
         TipoReserva tipoReservaActualizado = tipoReservaService.actualizarTipoReserva(id, tipoReserva);
 
@@ -77,7 +77,7 @@ public class TipoReservaController {
         return new ResponseEntity<>("Tipo de reserva no encontrado", HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/tiporeserva/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Integer id) {
         String resultado = tipoReservaService.eliminar(id);
 

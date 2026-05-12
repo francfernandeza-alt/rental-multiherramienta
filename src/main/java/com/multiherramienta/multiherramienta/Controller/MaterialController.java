@@ -34,7 +34,7 @@ public class MaterialController {
         return new ResponseEntity<>(material, HttpStatus.OK);
     }
 
-    @GetMapping("/material/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Material> buscarPorId(@PathVariable Integer id) {
         try {
             Material material = materialService.buscarPorId(id);
@@ -54,7 +54,7 @@ public class MaterialController {
         }
     }
 
-    @PatchMapping("/material/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Material> editarMaterial(@PathVariable Integer id, @RequestBody Material material) {
         try {
             Material editada = materialService.guardarMaterial(material);
@@ -64,7 +64,7 @@ public class MaterialController {
         }
     }
 
-    @PutMapping("/material/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Material> actualizarMaterial(@PathVariable Integer id, @RequestBody Material material){
         try{
             Material nuevoMaterial = materialService.actualizarMaterial(id, material);
@@ -74,7 +74,7 @@ public class MaterialController {
         }
     }
 
-    @DeleteMapping("/material/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarMaterial(@PathVariable Integer id) {
         String resultado = materialService.eliminar(id);
         if (resultado.contains("eliminado")) {

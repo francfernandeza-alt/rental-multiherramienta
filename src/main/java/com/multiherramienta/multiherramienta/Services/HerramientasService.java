@@ -40,7 +40,7 @@ public class HerramientasService {
         }
     }
 
-    public List<String> reseñasPorRutUsuario(String rutUsuario) {
+    public List<String> reseñaPorRutUsuario(String rutUsuario) {
     return herramientasRepository.findAll().stream()
             .filter(nexo -> nexo.getReserva() != null && nexo.getReserva().getUsuario() != null &&
             nexo.getReserva().getUsuario().getRutUsuario().equalsIgnoreCase(rutUsuario))

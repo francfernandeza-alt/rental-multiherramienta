@@ -34,7 +34,7 @@ public class MarcaController {
         return new ResponseEntity<>(marca, HttpStatus.OK);
     }
 
-    @GetMapping("/marca/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<MarcaDTO> buscarPorId(@PathVariable Integer id) {
         try {
             MarcaDTO mar = marcaService.buscarporId(id);
@@ -54,7 +54,7 @@ public class MarcaController {
         }
     }
 
-    @PatchMapping("/marca/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Marca> editarUsuario(@PathVariable Integer id, @RequestBody Marca marca) {
         try {
             Marca editada = marcaService.guardarMarca(marca);
@@ -64,7 +64,7 @@ public class MarcaController {
         }
     }
 
-    @PutMapping("/marca/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Marca> actualizarMarca(@PathVariable Integer id, @RequestBody Marca marca){
         try{
             Marca nuevaMarca = marcaService.actualizarMarca(id, marca);
@@ -74,7 +74,7 @@ public class MarcaController {
         }
     }
 
-    @DeleteMapping("/marca/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarMarca(@PathVariable Integer id) {
         String resultado = marcaService.eliminar(id);
         if (resultado.contains("eliminada")) {

@@ -2,6 +2,16 @@
 
 Backend desarrollado con Java Spring Boot para gestionar el arriendo de herramientas.
 
+## Integrantes
+
+- Javier Olave
+- Franco Fernandez
+- Nicolas Labrin
+
+## Descripción del proyecto
+
+Rental Herramientas permite administrar usuarios, herramientas, reservas, direcciones, comunas, regiones, marcas, materiales, tipos de herramienta, tipos de pago, tipos de reserva y mantenciones.
+
 ## Tecnologías
 
 - Java
@@ -30,7 +40,7 @@ Crear la base de datos en MySQL:
 
 ```sql
 CREATE DATABASE db_rental_herramientas;
-```
+``
 
 Configurar `src/main/resources/application.properties`:
 
