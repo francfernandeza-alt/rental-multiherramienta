@@ -35,7 +35,7 @@ public class ComunaController {
         return new ResponseEntity<>(comuna, HttpStatus.OK);
     }
 
-    @GetMapping("/comunas/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Comuna> buscarPorId(@PathVariable Integer id) {
         try {
             Comuna comuna = comunaService.buscarPorId(id);
