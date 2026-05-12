@@ -52,6 +52,7 @@ public class Usuario {
     private String tipoUsuario;
 
     @NotBlank (message = "El email es obligatorio")
+    @Email
     @Size(min = 13, max = 100, message = "El email debe tener entre 13 y 100 caracteres")
     @Column(nullable = false, length = 100)
     private String emailUsuario;
