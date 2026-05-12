@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.multiherramienta.multiherramienta.Model.Herramientas;
 import com.multiherramienta.multiherramienta.Services.HerramientasService;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("/api/v1/reseña")
 public class HerramientasController {
