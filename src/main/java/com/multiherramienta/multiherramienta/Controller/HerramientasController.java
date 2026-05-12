@@ -19,61 +19,58 @@ import com.multiherramienta.multiherramienta.Services.HerramientasService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/herramientas-reservadas")
+@RequestMapping("/api/v1/reseña")
 public class HerramientasController {
 
     @Autowired
     private HerramientasService herramientasService;
 
     @GetMapping
-    public ResponseEntity<?> listarHerramientasReservadas() {
-        List<Herramientas> herramientasReservadas = herramientasService.obtenerTodas();
-
-        if (herramientasReservadas.isEmpty()) {
+    public ResponseEntity<List<Herramientas>> todosLasReseñas() {
+        List<Herramientas> reseña = herramientasService.obtenerTodas();
+        if (reseña.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(herramientasReservadas, HttpStatus.OK);
+        return new ResponseEntity<>(reseña, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarHerramientaReservadaPorId(@PathVariable Integer id) {
+    public ResponseEntity<Herramientas> buscarporId(@PathVariable Integer id) {
         try {
-            Herramientas herramientaReservada = herramientasService.buscarPorId(id);
-            return new ResponseEntity<>(herramientaReservada, HttpStatus.OK);
+            Herramientas her = herramientasService.buscarPorId(id);
+            return new ResponseEntity<>(her, HttpStatus.OK);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>("Herramienta reservada no encontrada", HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<?> agregarHerramientaReservada(@Valid @RequestBody Herramientas herramientaReservada) {
+    public ResponseEntity<Herramientas> agregarReseña(@RequestBody Herramientas reseña) {
         try {
-            Herramientas guardada = herramientasService.guardar(herramientaReservada);
-            return new ResponseEntity<>(guardada, HttpStatus.CREATED);
+            Herramientas guardado = herramientasService.guardar(reseña);
+            return new ResponseEntity<>(guardado, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>("No se pudo agregar la herramienta reservada", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarHerramientaReservada(@PathVariable Integer id) {
+    public ResponseEntity<String> eliminarReseña(@PathVariable Integer id) {
         String resultado = herramientasService.eliminar(id);
-
         if (resultado.contains("eliminada")) {
             return new ResponseEntity<>(resultado, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(resultado, HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/usuario/{rutUsuario}")
-    public ResponseEntity<?> herramientasReservadasPorRutUsuario(@PathVariable String rutUsuario) {
-        List<String> herramientasReservadas = herramientasService.herramientasPorRutUsuario(rutUsuario);
+    @GetMapping("/reseñas/{rutUsuario}")
+    public ResponseEntity<List<String>> reseñasPorUsuario(@PathVariable String rutUsuario) {
+        List<String> reseñas = herramientasService.reseñaPorRutUsuario(rutUsuario);
 
-        if (herramientasReservadas.isEmpty()) {
+        if (reseñas.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
-        return new ResponseEntity<>(herramientasReservadas, HttpStatus.OK);
+        return new ResponseEntity<>(reseñas, HttpStatus.OK);
     }
 }
